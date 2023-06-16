@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h2>KORONA.cloud Add Product</h2>
+
+<div class="navbar">
+    <a class="navbar-brand" href="#">KORONA.cloud</a>
+    <ul>
+        <li><a href="#" id="getCommodityGroupsBtn">Get Commodity Groups</a></li>
+        <li><a href="#" id="getSuppliersBtn">Get Suppliers</a></li>
+        <li><a href="#" id="getSectorsBtn">Get Sectors</a></li> <!-- Added button for Get Sectors -->
+    </ul>
+</div>
+
+<div class="container">
+    <div class="form-container">
+        <form id="productForm">
+            <section>
+
+            <p>GENERAL</p>
+            
+            <!-- getAllProducts() => (lastIndexOf.productNumber + 1)-->
+            <!-- <div>
+                <label for="number">Number:</label>
+            <input class='product-input' type="text" id="number" name="number" readonly>
+            </div> -->
+            
+            <div>
+                <label for="product_name">Name:</label>
+                <input class='product-input' type="text" id="product_name" name="product_name" value="">
+            </div>
+            
+            <div>
+                <label for="product_code">UPC Code:</label>
+            <input class='product-input' type="text" id="product_code" name="product_code">
+            </div>
+            
+
+            <!-- getAssortments() -->
+            <div>
+                <label for="assortment_name">Assortment:</label>
+                <select class='product-input' type="text" id="assortment_name" name="assortment_name" value="">
+                    <option value="">-- Choose an Assortment --</option>
+                </select>
+            </div>
+            
+
+            <!-- getCommodityGroups() -->
+            <div>
+                <label for="commodity_group_name">Commodity Group:</label>
+                <select class='product-input' type="text" id="commodity_group_name" name="commodity_group_name" value="">
+                    <option value="">-- Choose a Group --</option>
+                </select>
+            </div>
+
+            <div>
+                <label for="values">Price:</label>
+                <input class='product-input' type="text" id="values" name="values">
+            </div>
+
+            <div>
+                <label for="price-group">Price Group:</label>
+                <select class='product-input' type="text" id="price-group" name="price-group" value=""></select>
+            </div>
+
+            <div>
+                <label for="sector_name">Sector:</label>
+                <select class='product-input' type="text" id="sector_name" name="sector_name" value=""></select>
+            </div>
+            
+
+        </section>
+
+        <section>
+            <div>
+                <p>ADDITIONAL INFORMATION</p>
+            </div>
+            <div>
+                <div>
+                    <label for="price_changable">Price Changeable? (Y/N):</label>
+                    <input class='product-input' type="checkbox" id="price_changable" name="price_changable" value="" checked>
+                </div>
+        
+                <div>
+                    <label for="track_inventory">Track Inventory? (Y/N):</label>
+                    <input class='product-input' type="checkbox" id="track_inventory" name="track_inventory" value="" checked>
+                </div>
+    
+                <div>
+                    <label for="discountable">Is Discountable? (Y/N):</label>
+                    <input class='product-input' type="checkbox" id="discountable" name="discountable" value="" checked>
+                </div>
+            </div>
+        </section>
+
+        
+        <section>
+            <p>SUPPLIER INFORMATION<button id="toggle_supplier_btn" type="button">Toggle</button></p>
+            
+            <div id="supplier_section" style="display: none;">
+                <div>
+                <label for="supplier_number">Supplier number:</label>
+                <input class='product-input' type="text" id="supplier_number" name="supplier_number" value="">
+                </div>
+            
+                <div>
+                <label for="supplier_name">Supplier name:</label>
+                <select class='product-input' type="text" id="supplier_name" name="supplier_name" value="">
+                    <option value="">-- Choose a supplier --</option>
+                </select>
+                </div>
+            
+                <div>
+                <label for="orderCode">Order code:</label>
+                <input class='product-input' type="text" id="orderCode" name="orderCode" value="8888">
+                </div>
+            
+                <div>
+                <label for="supplier_value">Supplier value:</label>
+                <input class='product-input' type="text" id="supplier_value" name="supplier_value" value="1">
+                </div>
+            
+                <div>
+                <label for="containerSize">Container size:</label>
+                <input class='product-input' type="text" id="containerSize" name="containerSize" value="1">
+                </div>
+            </div>
+        </section>
+
+        
+        <div>
+            <input type="submit" value="Submit">
+        </div>
+
+        
+        </form>
+    </div>
+
+    <div class="response-container">
+        <div class="response-box">
+            <p id="serverResponse"></p>
+        </div>
+    </div>
+</div>
+
+<script src="./addProduct.js"></script>
+
+</body>
+</html>

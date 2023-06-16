@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFEFD5; /* Light orange background */
+}
+
+h2 {
+    text-align: center;
+    padding: 20px;
+    color: #333;
+}
+
+.navbar {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+}
+
+.navbar-brand {
+    margin-right: auto;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+}
+
+.navbar ul {
+    list-style-type: none;
+    display: flex;
+}
+
+.navbar li {
+    margin-left: 10px;
+}
+
+.navbar li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 1px 5px;
+    border-radius: 5px;
+}
+
+.navbar li a:hover {
+    background-color: #444;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 50px;
+    overflow-y: scroll;
+}
+
+.form-container {
+flex: 1;
+padding-right: 20px;
+max-width: calc(100vw - 40px); /* Limit width to viewport width minus padding */
+margin: 0 auto; /* Center the container */
+}
+
+.response-container {
+    flex: 1;
+    padding-left: 20px;
+}
+
+form {
+    width: 80%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(204, 102, 0, 0.7); /* Dark orange shadow */
+}
+
+label {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input[type="text"],
+select[type="text"] {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Smooth transition */
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+input[type="text"]:focus {
+    box-shadow: 0 0 5px #FF8C00; /* Orange shadow when focused */
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #444;
+}
+
+.response-box {
+    max-width: 500px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+}
+
+.response-box p {
+    margin: 0;
+}
+
+.button-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #444;
+}
+
+.supplier-field {
+    display: block; /* Show the supplier fields by default */
+}

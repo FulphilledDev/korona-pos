@@ -6,9 +6,9 @@ const password = "1234";
 // Product Object elements we need
 // 'number' is being automatically generated on submission to korona for assurance of not overwriting previous data...still need to figure out how to replace that
 // let number;
-const prices = document.getElementById('values').value;
-const product_code = document.getElementById('product_code').value;
-const productName = document.getElementById('product_name').value;
+let prices = document.getElementById('values');
+let product_code = document.getElementById('product_code');
+let productName = document.getElementById('product_name');
 const price_changable = document.getElementById('price_changable').checked;
 const discountable = document.getElementById('discountable').checked;
 const track_inventory = document.getElementById('track_inventory').checked;
@@ -78,8 +78,6 @@ const onProductSubmit = (event) => {
       // ]
     }];
 
-    const getProductNameValue = () => productName.value
-
     const getOptionValue = (option) => {
       const selectElement = document.getElementById(option);
       const selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -105,9 +103,7 @@ const onProductSubmit = (event) => {
     getOptionValue('commodity_group_name')
     getOptionValue('assortment_name')
     getOptionValue('sector_name')
-    getOptionValue('price-group')
-    getProductNameValue(productName.value)
-    
+    getOptionValue('price-group')    
 
     console.log(product)
     console.log(`New product name: ${productName}`)
@@ -520,7 +516,6 @@ const fetchAllResults = (requestUrlValue, requestName, responseBoxId, remainingR
     });
 };
 
-// Usage example:
 const getSuppliersNav = () => {
   // let requestUrl = url + 'suppliers';
   fetchDataAndPopulateTable('suppliers', 'Suppliers', 'serverResponse');
@@ -571,11 +566,26 @@ const resetForm = () => {
   supplierSection.style.display = 'none';
 };
 
+const priceInputValue = (e) => {
+  prices = e.target.value;
+}
+
+const productCodeValue = (e) => {
+  product_code = e.target.value;
+}
+
+const productNameValue = (e) => {
+  productName = e.target.value;
+}
+
 
 
 const init = () => {
   productSubmitForm.addEventListener('submit', onProductSubmit);
-  
+  prices.addEventListener('input', priceInputValue);
+  product_code.addEventListener('input', productCodeValue);
+  productName.addEventListener('input', productNameValue);
+
   getSuppliersBtn.addEventListener('click', getSuppliersNav);
   getCommodityGroupsBtn.addEventListener('click', getCommodityGroupsNav);
   getSectorsBtn.addEventListener('click', getSectorsNav);

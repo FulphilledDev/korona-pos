@@ -11,9 +11,10 @@ h2 {
     color: #333;
 }
 
-.navbar {
+.navbar,
+.get-requests {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-around;
     align-items: center;
     background-color: #333;
     color: #fff;
@@ -27,25 +28,24 @@ h2 {
     text-decoration: none;
     color: #fff;
 }
-
-.navbar ul {
-    list-style-type: none;
-    display: flex;
+.get-requests {
+    min-width: 30%;
 }
-
-.navbar li {
+.get-requests li {
     margin-left: 10px;
+    list-style-type: none;
 }
 
-.navbar li a {
-    color: #fff;
+.get-requests li a {
     text-decoration: none;
-    padding: 1px 5px;
-    border-radius: 5px;
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: 10px;
 }
 
-.navbar li a:hover {
+.get-requests li a:hover {
     background-color: #444;
+    color: #fff;
 }
 
 .container {

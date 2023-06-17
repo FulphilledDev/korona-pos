@@ -9,9 +9,9 @@ const password = "1234";
 let prices = document.getElementById('values');
 let product_code = document.getElementById('product_code');
 let productName = document.getElementById('product_name');
-const price_changable = document.getElementById('price_changable').checked;
-const discountable = document.getElementById('discountable').checked;
-const track_inventory = document.getElementById('track_inventory').checked;
+let price_changable = document.getElementById('price_changable');
+let discountable = document.getElementById('discountable');
+let track_inventory = document.getElementById('track_inventory');
 const commodity_group_name = document.getElementById('commodity_group_name');
 const assortment_name = document.getElementById('assortment_name');
 const sector_name = document.getElementById('sector_name');
@@ -50,9 +50,9 @@ const onProductSubmit = (event) => {
           "name": commodity_group_name,
       },
       "name": productName,
-      "priceChangable": price_changable,
-      "discountable": discountable,
-      "trackInventory": track_inventory,
+      "priceChangable": price_changable.checked,
+      "discountable": discountable.checked,
+      "trackInventory": track_inventory.checked,
       "sector": {
           "name": sector_name
       },
@@ -107,6 +107,9 @@ const onProductSubmit = (event) => {
 
     console.log(product)
     console.log(`New product name: ${productName}`)
+    console.log(price_changable.checked)
+    console.log(track_inventory.checked)
+    console.log(discountable.checked)
 
     let requestUrl = url + 'products';
 
@@ -160,6 +163,7 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText) =>
       // Check if 'General' and 'Default' exist in data.results
       const hasGeneral = data.results.some((item) => item[optionText] === 'General');
       const hasDefault = data.results.some((item) => item[optionText] === 'Default');
+      const hasGeneralAssortment = data.results.some((item) => item[optionText] === 'General Assortment')
 
       // Add 'General' and 'Default' options if not already present
       data.results.forEach((item) => {
@@ -171,6 +175,8 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText) =>
         if (item[optionText] === 'General' && hasGeneral) {
           option.selected = true;
         } else if (item[optionText] === 'Default' && hasDefault) {
+          option.selected = true;
+        } else if (item[optionText] === 'General Assortment' && hasGeneralAssortment) {
           option.selected = true;
         }
         
@@ -213,51 +219,51 @@ const getPriceGroups = () => {
 // *********************
 // NOTE: Fix this for actual product number that korona generates on submit   
 // *********************
-const getProductNumber = () => {
-  const productNumber = document.getElementById('number');
-  let requestUrl = url + 'products';
+// const getProductNumber = () => {
+//   const productNumber = document.getElementById('number');
+//   let requestUrl = url + 'products';
 
-  fetch(requestUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa(username + ':' + password),
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const results = data.results
-      console.log(results)
+//   fetch(requestUrl, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': 'Basic ' + btoa(username + ':' + password),
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const results = data.results
+//       console.log(results)
 
-      results.sort((a, b) => a.number.length - b.number.length)
+//       results.sort((a, b) => a.number.length - b.number.length)
       
-      // Longest product number
-      let longestNumber = '';
-      results.forEach(product => {
-        const productNumber = product.number.toString();
-        if (productNumber.length > longestNumber.length) {
-          longestNumber = productNumber;
-        }
-      });
-      console.log('Longest product number:', longestNumber);
+//       // Longest product number
+//       let longestNumber = '';
+//       results.forEach(product => {
+//         const productNumber = product.number.toString();
+//         if (productNumber.length > longestNumber.length) {
+//           longestNumber = productNumber;
+//         }
+//       });
+//       console.log('Longest product number:', longestNumber);
 
-      // Other longest product number
+//       // Other longest product number
       
-      const assignLastProductNumber = longestNumber ? longestNumber : "0";
-      const nextProductNumber = assignLastProductNumber + "1";
+//       const assignLastProductNumber = longestNumber ? longestNumber : "0";
+//       const nextProductNumber = assignLastProductNumber + "1";
 
-      if (!results.includes(nextProductNumber)) {
-        productNumber.textContent = nextProductNumber
-        productNumber.value = nextProductNumber
-      } else {
-        productNumber.textContent = 'Auto generated number exists. Make your own.'
-      }
+//       if (!results.includes(nextProductNumber)) {
+//         productNumber.textContent = nextProductNumber
+//         productNumber.value = nextProductNumber
+//       } else {
+//         productNumber.textContent = 'Auto generated number exists. Make your own.'
+//       }
       
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-};
+//     })
+//     .catch((error) => {
+//       console.error('Error:', error);
+//     });
+// };
 
 //////////////////////////////////////////////
 // NAVBAR BUTTONS FUNCTIONS - 'GET'
@@ -516,6 +522,10 @@ const fetchAllResults = (requestUrlValue, requestName, responseBoxId, remainingR
     });
 };
 
+//////////////////////////////////////////////
+// NAVBAR ARGUMENTS
+/////////////////////////////////////////////
+
 const getSuppliersNav = () => {
   // let requestUrl = url + 'suppliers';
   fetchDataAndPopulateTable('suppliers', 'Suppliers', 'serverResponse');
@@ -558,8 +568,8 @@ const resetForm = () => {
   document.getElementById('discountable').checked = true;
   document.getElementById('supplier_number').value = '';
   document.getElementById('supplier_name').selectedIndex = 0;
-  document.getElementById('orderCode').value = '8888';
-  document.getElementById('supplier_value').value = '1';
+  document.getElementById('orderCode').value = '';
+  document.getElementById('supplier_value').value = '';
   document.getElementById('containerSize').value = '1';
 
   // Hide the supplier_section div

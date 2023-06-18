@@ -299,36 +299,18 @@ const resetForm = () => {
   document.getElementById('supplier_name').selectedIndex = 0;
   document.getElementById('orderCode').value = '';
   document.getElementById('supplier_value').value = '';
-  document.getElementById('containerSize').value = '1';
+  document.getElementById('containerSize').value = '';
 
   // Hide the supplier_section div
   supplierSection.style.display = 'none';
 };
 
-const priceInputValue = (e) => {
-  prices = e.target.value;
-}
-
-const productCodeValue = (e) => {
-  product_code = e.target.value;
-}
-
-const productNameValue = (e) => {
-  productName = e.target.value;
-}
-
-const supplierOrderValue = (e) => {
-  supplierOrderCode = e.target.value
-}
-
-const supplierCostValue = (e) => {
-  supplierItemCost = e.target.value
-}
-
-const supplierPackageValue = (e) => {
-  supplierPackageQuantity = Number(e.target.value)
-}
-
+const priceInputValue = (e) => prices = e.target.value;
+const productCodeValue = (e) => product_code = e.target.value;
+const productNameValue = (e) => productName = e.target.value;
+const supplierOrderValue = (e) => supplierOrderCode = e.target.value
+const supplierCostValue = (e) => supplierItemCost = e.target.value
+const supplierPackageValue = (e) => supplierPackageQuantity = e.target.value
 
 const init = () => {
   productSubmitForm.addEventListener('submit', onProductSubmit);

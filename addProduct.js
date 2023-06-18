@@ -235,6 +235,37 @@ const getPriceGroups = () => {
   populateDropdown(requestUrl, priceGroup, 'name', 'name');
 };
 
+////////////////////////
+// TAGS
+////////////////////////
+
+// Array to store the tags
+let tags = [];
+
+// Function to add a tag
+function addTag() {
+  const tagInput = document.getElementById('tag-input');
+  const newTag = tagInput.value.trim();
+  
+  if (newTag !== '') {
+    tags.push(newTag);
+    tagInput.value = '';
+    renderTags();
+  }
+}
+
+// Function to render the tags
+function renderTags() {
+  const tagContainer = document.getElementById('tag-container');
+  tagContainer.innerHTML = '';
+  
+  for (let i = 0; i < tags.length; i++) {
+    const tagElement = document.createElement('span');
+    tagElement.innerText = tags[i];
+    tagElement.classList.add('tag-input');
+    tagContainer.appendChild(tagElement);
+  }
+}
 
     
     

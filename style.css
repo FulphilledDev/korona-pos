@@ -177,3 +177,12 @@ input[type="submit"]:hover {
 .submit-div {
     margin-top: 2rem;
 }
+
+.tag-inputAndButton {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+

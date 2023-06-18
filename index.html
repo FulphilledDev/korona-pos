@@ -16,59 +16,65 @@
 </div>
 
 <div class="container">
+    <div class="response-container">
+        <div class="response-box">
+            <span id="serverResponse"></span>
+        </div>
+    </div>
     <div class="form-container">
         <form id="productForm">
             <section>
-
-            <p>GENERAL</p>
+                <div>
+                    <p>GENERAL</p>
+                </div>
             
             <!-- getAllProducts() => (lastIndexOf.productNumber + 1)-->
             <!-- <div>
                 <label for="number">Number:</label>
             <input class='product-input' type="text" id="number" name="number" readonly>
             </div> -->
-            
-            <div>
+            <div class="section-div">
+
+            <div class="form-div">
                 <label for="product_name">Name:</label>
                 <input class='product-input' type="text" id="product_name" name="product_name" value="">
             </div>
             
-            <div>
+            <div class="form-div">
                 <label for="product_code">UPC Code:</label>
             <input class='product-input' type="text" id="product_code" name="product_code">
             </div>
-            
 
-            <!-- getAssortments() -->
-            <div>
-                <label for="assortment_name">Assortment:</label>
-                <select class='product-input' type="text" id="assortment_name" name="assortment_name" value="">
-                </select>
+            <div class="form-div">
+                <label for="values">Price:</label>
+                <input class='product-input' type="text" id="values" name="values">
             </div>
-            
 
             <!-- getCommodityGroups() -->
-            <div>
+            <div class="form-div">
                 <label for="commodity_group_name">Commodity Group:</label>
                 <select class='product-input' type="text" id="commodity_group_name" name="commodity_group_name" value="">
                     <option value="">-- Choose a Group --</option>
                 </select>
             </div>
-
-            <div>
-                <label for="values">Price:</label>
-                <input class='product-input' type="text" id="values" name="values">
+            
+            <!-- getAssortments() -->
+            <div class="form-div">
+                <label for="assortment_name">Assortment:</label>
+                <select class='product-input' type="text" id="assortment_name" name="assortment_name" value="">
+                </select>
             </div>
 
-            <div>
+            <div class="form-div">
                 <label for="price-group">Price Group:</label>
                 <select class='product-input' type="text" id="price-group" name="price-group" value=""></select>
             </div>
 
-            <div>
+            <div class="form-div">
                 <label for="sector_name">Sector:</label>
                 <select class='product-input' type="text" id="sector_name" name="sector_name" value=""></select>
             </div>
+        </div>
             
 
         </section>
@@ -97,32 +103,35 @@
 
         
         <section>
-            <p>SUPPLIER INFORMATION<button id="toggle_supplier_btn" type="button">Toggle</button></p>
+            <div>
+                <p>SUPPLIER INFORMATION<button id="toggle_supplier_btn" type="button">Show</button></p>
+            </div>
             
-            <div id="supplier_section" style="display: none;">
-                <div>
+            
+            <div class="supplier-section-div" id="supplier_section" style="display: none;">
+                <div class="supplier-form-div">
                 <label for="supplier_number">Supplier number:</label>
                 <input class='product-input' type="text" id="supplier_number" name="supplier_number" value="">
                 </div>
             
-                <div>
+                <div class="supplier-form-div">
                 <label for="supplier_name">Supplier name:</label>
                 <select class='product-input' type="text" id="supplier_name" name="supplier_name" value="">
                     <option value="">-- Choose a supplier --</option>
                 </select>
                 </div>
             
-                <div>
+                <div class="supplier-form-div">
                 <label for="orderCode">Order code:</label>
                 <input class='product-input' type="text" id="orderCode" name="orderCode" value="8888">
                 </div>
             
-                <div>
+                <div class="supplier-form-div">
                 <label for="supplier_value">Supplier value:</label>
                 <input class='product-input' type="text" id="supplier_value" name="supplier_value" value="1">
                 </div>
             
-                <div>
+                <div class="supplier-form-div">
                 <label for="containerSize">Container size:</label>
                 <input class='product-input' type="text" id="containerSize" name="containerSize" value="1">
                 </div>
@@ -138,12 +147,6 @@
         </form>
     </div>
 
-    <div class="response-container">
-        
-        <div class="response-box">
-            <p id="serverResponse"></p>
-        </div>
-    </div>
 </div>
 
 <script src="./addProduct.js"></script>

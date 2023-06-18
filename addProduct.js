@@ -106,10 +106,6 @@ const onProductSubmit = (event) => {
     getOptionValue('price-group')    
 
     console.log(product)
-    console.log(`New product name: ${productName}`)
-    console.log(price_changable.checked)
-    console.log(track_inventory.checked)
-    console.log(discountable.checked)
 
     let requestUrl = url + 'products';
 
@@ -129,6 +125,7 @@ const onProductSubmit = (event) => {
 
         if (serverResponse.includes('ADDED')) {
           resetForm();
+          showResponseBox();
         }
 
         
@@ -140,7 +137,10 @@ const onProductSubmit = (event) => {
     
 };
 
-console.log(`Previous product name: ${productName}`)
+const showResponseBox = () => {
+  const responseBox = document.querySelector('.response-box');
+  responseBox.style.display = 'block';
+};
 
 
 ////////////////////////
@@ -529,16 +529,21 @@ const fetchAllResults = (requestUrlValue, requestName, responseBoxId, remainingR
 const getSuppliersNav = () => {
   // let requestUrl = url + 'suppliers';
   fetchDataAndPopulateTable('suppliers', 'Suppliers', 'serverResponse');
+  showResponseBox();
 };
 
 const getCommodityGroupsNav = () => {
   // let requestUrl = url + 'commodityGroups';
   fetchDataAndPopulateTable('commodityGroups', 'Commmodity Groups', 'serverResponse');
+  showResponseBox();
+
 };
 
 const getSectorsNav = () => {
   // let requestUrl = url + 'suppliers';
   fetchDataAndPopulateTable('sectors', 'Sectors', 'serverResponse');
+  showResponseBox();
+
 };
 
 ///////////////////////////
@@ -548,6 +553,7 @@ const getSectorsNav = () => {
 const toggleSupplierSection = () => {
   const section = document.getElementById('supplier_section');
   section.style.display = section.style.display === 'none' ? 'block' : 'none';
+  toggleSupplierBtn.innerText = section.style.display === 'none' ? 'Show' : 'Hide'
 }
 
 //////////////////////////

@@ -32,10 +32,9 @@ let currentDate = new Date().toISOString();
 let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYYY-MM-DDTHH:MM:SS+00:00"
 
 ///////////////////////
-// FORM ACTIONS
+// FORM SUBMIT
 ///////////////////////
 
-// SUBMIT
 const onProductSubmit = (event) => {
     event.preventDefault();
 
@@ -145,6 +144,26 @@ const showResponseBox = () => {
   responseBox.style.display = 'block';
 };
 
+////////////////////////////
+// FORM VALUES
+///////////////////////////
+
+const priceInputValue = (e) => prices = e.target.value;
+const productCodeValue = (e) => product_code = e.target.value;
+const productNameValue = (e) => productName = e.target.value;
+const supplierOrderValue = (e) => supplierOrderCode = e.target.value
+const supplierCostValue = (e) => supplierItemCost = e.target.value
+const supplierPackageValue = (e) => supplierPackageQuantity = e.target.value
+
+///////////////////////////
+// TOGGLE SUPPLIERS
+//////////////////////////
+
+const toggleSupplierSection = () => {
+  const section = document.getElementById('supplier_section');
+  section.style.display = section.style.display === 'none' ? 'block' : 'none';
+  toggleSupplierBtn.innerText = section.style.display === 'none' ? 'Show' : 'Hide'
+}
 
 ////////////////////////
 // INIT FUNCTIONS
@@ -268,17 +287,6 @@ const getPriceGroups = () => {
 //     });
 // };
 
-
-///////////////////////////
-// TOGGLE SUPPLIERS
-//////////////////////////
-
-const toggleSupplierSection = () => {
-  const section = document.getElementById('supplier_section');
-  section.style.display = section.style.display === 'none' ? 'block' : 'none';
-  toggleSupplierBtn.innerText = section.style.display === 'none' ? 'Show' : 'Hide'
-}
-
 //////////////////////////
 // RESET UI
 //////////////////////////
@@ -304,13 +312,6 @@ const resetForm = () => {
   // Hide the supplier_section div
   supplierSection.style.display = 'none';
 };
-
-const priceInputValue = (e) => prices = e.target.value;
-const productCodeValue = (e) => product_code = e.target.value;
-const productNameValue = (e) => productName = e.target.value;
-const supplierOrderValue = (e) => supplierOrderCode = e.target.value
-const supplierCostValue = (e) => supplierItemCost = e.target.value
-const supplierPackageValue = (e) => supplierPackageQuantity = e.target.value
 
 const init = () => {
   productSubmitForm.addEventListener('submit', onProductSubmit);

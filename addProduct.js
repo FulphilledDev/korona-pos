@@ -19,7 +19,9 @@ const priceGroup = document.getElementById('price-group')
 const productSubmitForm = document.getElementById('productForm')
 const productInput = document.getElementsByClassName('product-input')
 const supplier_name = document.getElementById('supplier_name')
-// const supplier_number = document.getElementById('supplier_number')
+let supplierOrderCode = document.getElementById('orderCode')
+let supplierItemCost = document.getElementById('supplier_value')
+let supplierPackageQuantity = document.getElementById('containerSize')
 
 // Get other elements from DOM
 const supplierSection = document.getElementById('supplier_section')
@@ -64,17 +66,16 @@ const onProductSubmit = (event) => {
               "productCode": product_code
           }
       ],
-      // "supplierPrices": [
-      //     {
-      //         "supplier": {
-      //             "name": document.getElementById('supplier_name').value
-      //         },
-      //         "orderCode": document.getElementById('orderCode').value,
-      //         "value": parseFloat(document.getElementById('supplier_value').value),
-      //         "containerSize": parseFloat(document.getElementById('containerSize').value),
-      //         // "description": document.getElementById('supplier_description').value
-      //     }
-      // ]
+      "supplierPrices": [
+          {
+              "supplier": {
+                  "name": supplier_name
+              },
+              "orderCode": supplierOrderCode,
+              "value": supplierItemCost,
+              "containerSize": supplierPackageQuantity,
+          }
+      ]
     }];
 
     const getOptionValue = (option) => {
@@ -92,7 +93,9 @@ const onProductSubmit = (event) => {
       } else if (option === 'price-group') {
         let productPrice = product[0].prices
         productPrice[0].priceGroup.name = selectedValue;
-
+      } else if (option === 'supplier_name') {
+        let supplierPrice = product[0].supplierPrices
+        supplierPrice[0].supplier.name = selectedValue;
       }
       
     };
@@ -103,6 +106,7 @@ const onProductSubmit = (event) => {
     getOptionValue('assortment_name')
     getOptionValue('sector_name')
     getOptionValue('price-group')    
+    getOptionValue('supplier_name')
 
     console.log(product)
 
@@ -313,13 +317,29 @@ const productNameValue = (e) => {
   productName = e.target.value;
 }
 
+const supplierOrderValue = (e) => {
+  supplierOrderCode = e.target.value
+}
+
+const supplierCostValue = (e) => {
+  supplierItemCost = e.target.value
+}
+
+const supplierPackageValue = (e) => {
+  supplierPackageQuantity = Number(e.target.value)
+}
 
 
 const init = () => {
   productSubmitForm.addEventListener('submit', onProductSubmit);
+
   prices.addEventListener('input', priceInputValue);
   product_code.addEventListener('input', productCodeValue);
   productName.addEventListener('input', productNameValue);
+
+  supplierOrderCode.addEventListener('input', supplierOrderValue)
+  supplierItemCost.addEventListener('input', supplierCostValue)
+  supplierPackageQuantity.addEventListener('input', supplierPackageValue)
 
 
   // getProductNumber();

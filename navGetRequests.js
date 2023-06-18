@@ -26,6 +26,7 @@ const fetchDataAndPopulateTable = (requestUrlValue, requestName, responseBoxId) 
 
       // Create table structure
       let table = document.createElement('table');
+      table.style.minWidth = '500px';
       let tableHeader = document.createElement('thead');
       let headerRow = document.createElement('tr');
       let nameHeader = document.createElement('th');
@@ -284,9 +285,9 @@ const getSectorsNav = () => {
 };
 
 const initNav = () => {
-    getSuppliersBtn.addEventListener('click', getSuppliersNav);
-    getCommodityGroupsBtn.addEventListener('click', getCommodityGroupsNav);
-    getSectorsBtn.addEventListener('click', getSectorsNav);
+    // getSuppliersBtn.addEventListener('click', getSuppliersNav);
+    // getCommodityGroupsBtn.addEventListener('click', getCommodityGroupsNav);
+    // getSectorsBtn.addEventListener('click', getSectorsNav);
 }
 
 initNav();

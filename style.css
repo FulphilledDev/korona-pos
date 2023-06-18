@@ -32,6 +32,7 @@ p {
     font-weight: bold;
     text-decoration: none;
     color: #fff;
+    padding: 1rem;
 }
 .get-requests {
     min-width: 30%;
@@ -161,9 +162,7 @@ input[type="submit"]:hover {
     color: black;
     margin: 0 2rem;
 }
-.supplier-field {
-    display: block; /* Show the supplier fields by default */
-}
+
 
 .checkbox-div {
     margin: 1rem 0;
@@ -174,3 +173,7 @@ input[type="submit"]:hover {
     transform: scale(1.5);
     margin: 0 1rem;
     }
+
+.submit-div {
+    margin-top: 2rem;
+}

@@ -124,6 +124,8 @@ input[type="submit"]:hover {
 
 .response-box {
     width: max-content;
+    max-width: 75%;
+    min-width: 50%;
     margin: 2rem auto;
     padding: 20px;
     background-color: #fff;
@@ -164,3 +166,12 @@ input[type="submit"]:hover {
 .supplier-field {
     display: block; /* Show the supplier fields by default */
 }
+
+.checkbox-div {
+    margin: 1rem 0;
+}
+#discountable[type="checkbox"], 
+#track_inventory[type="checkbox"], 
+#price_changable[type="checkbox"] {
+    transform: scale(1.5);
+    }

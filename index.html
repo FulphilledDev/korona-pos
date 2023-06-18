@@ -16,11 +16,6 @@
 </div>
 
 <div class="container">
-    <div class="response-container">
-        <div class="response-box">
-            <span id="serverResponse"></span>
-        </div>
-    </div>
     <div class="form-container">
         <form id="productForm">
             <section>
@@ -84,17 +79,17 @@
                 <p>ADDITIONAL INFORMATION</p>
             </div>
             <div>
-                <div>
+                <div class="checkbox-div">
                     <label for="price_changable">Price Changeable? </label>
                     <input class='product-input' type="checkbox" id="price_changable" name="price_changable" value="" checked>
                 </div>
         
-                <div>
+                <div class="checkbox-div">
                     <label for="track_inventory">Track Inventory? </label>
                     <input class='product-input' type="checkbox" id="track_inventory" name="track_inventory" value="" checked>
                 </div>
     
-                <div>
+                <div class="checkbox-div">
                     <label for="discountable">Is Discountable? </label>
                     <input class='product-input' type="checkbox" id="discountable" name="discountable" value="" checked>
                 </div>
@@ -146,7 +141,11 @@
         
         </form>
     </div>
-
+    <div class="response-container">
+        <div class="response-box">
+            <span id="serverResponse"></span>
+        </div>
+    </div>
 </div>
 
 <script src="./addProduct.js"></script>

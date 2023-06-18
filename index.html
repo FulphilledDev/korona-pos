@@ -8,14 +8,19 @@
 
 <div class="navbar">
     <a class="navbar-brand" href="#">KORONA.cloud - Add Product</a>
-    <ul class="get-requests">
+    <!-- <ul class="get-requests">
         <li><a href="#" id="getCommodityGroupsBtn">Commodity Groups</a></li>
         <li><a href="#" id="getSuppliersBtn">Suppliers</a></li>
-        <li><a href="#" id="getSectorsBtn">Sectors</a></li> <!-- Added button for Get Sectors -->
-    </ul>
+        <li><a href="#" id="getSectorsBtn">Sectors</a></li> 
+    </ul> -->
 </div>
 
 <div class="container">
+    <div class="response-container">
+        <div class="response-box">
+            <span id="serverResponse"></span>
+        </div>
+    </div>
     <div class="form-container">
         <form id="productForm">
             <section>
@@ -141,11 +146,7 @@
         
         </form>
     </div>
-    <div class="response-container">
-        <div class="response-box">
-            <span id="serverResponse"></span>
-        </div>
-    </div>
+    <!-- Add Get Response Div Here -->
 </div>
 
 <script src="./addProduct.js"></script>

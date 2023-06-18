@@ -174,4 +174,5 @@ input[type="submit"]:hover {
 #track_inventory[type="checkbox"], 
 #price_changable[type="checkbox"] {
     transform: scale(1.5);
+    margin: 0 1rem;
     }

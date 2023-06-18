@@ -23,9 +23,9 @@ const supplier_name = document.getElementById('supplier_name')
 // Get other elements from DOM
 const supplierSection = document.getElementById('supplier_section')
 const toggleSupplierBtn = document.getElementById('toggle_supplier_btn')
-const getCommodityGroupsBtn = document.getElementById('getCommodityGroupsBtn')
-const getSuppliersBtn = document.getElementById('getSuppliersBtn')
-const getSectorsBtn = document.getElementById('getSectorsBtn')
+// const getCommodityGroupsBtn = document.getElementById('getCommodityGroupsBtn')
+// const getSuppliersBtn = document.getElementById('getSuppliersBtn')
+// const getSectorsBtn = document.getElementById('getSectorsBtn')
 
 let currentDate = new Date().toISOString();
 let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYYY-MM-DDTHH:MM:SS+00:00"
@@ -602,9 +602,9 @@ const init = () => {
   product_code.addEventListener('input', productCodeValue);
   productName.addEventListener('input', productNameValue);
 
-  getSuppliersBtn.addEventListener('click', getSuppliersNav);
-  getCommodityGroupsBtn.addEventListener('click', getCommodityGroupsNav);
-  getSectorsBtn.addEventListener('click', getSectorsNav);
+  // getSuppliersBtn.addEventListener('click', getSuppliersNav);
+  // getCommodityGroupsBtn.addEventListener('click', getCommodityGroupsNav);
+  // getSectorsBtn.addEventListener('click', getSectorsNav);
 
   // getProductNumber();
   getAssortmentNames();

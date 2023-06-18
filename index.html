@@ -8,11 +8,11 @@
 
 <div class="navbar">
     <a class="navbar-brand" href="#">KORONA.cloud - Add Product</a>
-    <!-- <ul class="get-requests">
+    <ul class="get-requests">
         <li><a href="#" id="getCommodityGroupsBtn">Commodity Groups</a></li>
         <li><a href="#" id="getSuppliersBtn">Suppliers</a></li>
         <li><a href="#" id="getSectorsBtn">Sectors</a></li> 
-    </ul> -->
+    </ul>
 </div>
 
 <div class="container">
@@ -109,10 +109,6 @@
             
             
             <div class="supplier-section-div" id="supplier_section" style="display: none;">
-                <div class="supplier-form-div">
-                <label for="supplier_number">Supplier number:</label>
-                <input class='product-input' type="text" id="supplier_number" name="supplier_number" value="">
-                </div>
             
                 <div class="supplier-form-div">
                 <label for="supplier_name">Supplier name:</label>
@@ -132,7 +128,7 @@
                 </div>
             
                 <div class="supplier-form-div">
-                <label for="containerSize">Minimum Package Quantity Size:</label>
+                <label for="containerSize">Minimum Order Quantity:</label>
                 <input class='product-input' type="text" id="containerSize" name="containerSize" value="1">
                 </div>
             </div>
@@ -150,6 +146,7 @@
 </div>
 
 <script src="./addProduct.js"></script>
+<script src="./navGetRequests.js"></script>
 
 </body>
 </html>

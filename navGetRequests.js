@@ -1,8 +1,3 @@
-// API Credentials for one user
-const url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-const username = "main";
-const password = "1234";
-
 const getCommodityGroupsBtn = document.getElementById('getCommodityGroupsBtn')
 const getSuppliersBtn = document.getElementById('getSuppliersBtn')
 const getSectorsBtn = document.getElementById('getSectorsBtn')
@@ -288,10 +283,10 @@ const getSectorsNav = () => {
 
 };
 
-const init = () => {
+const initNav = () => {
     getSuppliersBtn.addEventListener('click', getSuppliersNav);
     getCommodityGroupsBtn.addEventListener('click', getCommodityGroupsNav);
     getSectorsBtn.addEventListener('click', getSectorsNav);
 }
 
-init();
+initNav();

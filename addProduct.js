@@ -1,7 +1,7 @@
 // API Credentials for one user
-const url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-const username = "main";
-const password = "1234";
+let url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
+let username = "main";
+let password = "1234";
 
 // Product Object elements we need
 // 'number' is being automatically generated on submission to korona for assurance of not overwriting previous data...still need to figure out how to replace that
@@ -291,7 +291,7 @@ const resetForm = () => {
   document.getElementById('price_changable').checked = true;
   document.getElementById('track_inventory').checked = true;
   document.getElementById('discountable').checked = true;
-  document.getElementById('supplier_number').value = '';
+  // document.getElementById('supplier_number').value = '';
   document.getElementById('supplier_name').selectedIndex = 0;
   document.getElementById('orderCode').value = '';
   document.getElementById('supplier_value').value = '';

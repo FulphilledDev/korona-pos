@@ -6,6 +6,7 @@ let password = "1234";
 // Product Object elements we need
 // 'number' is being automatically generated on submission to korona for assurance of not overwriting previous data...still need to figure out how to replace that
 // let number;
+let products
 let prices = document.getElementById('values');
 let product_code = document.getElementById('product_code');
 let productName = document.getElementById('product_name');
@@ -235,6 +236,30 @@ const getPriceGroups = () => {
   populateDropdown(requestUrl, priceGroup, 'name', 'name');
 };
 
+const getProducts = () => {
+  let requestUrl = url + 'products';
+
+  fetch(requestUrl, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(username + ':' + password),
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      products = data.results
+      // Sort by Product Number
+      products.sort((a, b) => a.number - b.number)
+      // Sort by Product Name
+      // products.sort((a, b) => a.name.localeCompare(b.name))
+      finalProductsArray = products[products.length - 1]
+      console.log(products)
+      console.log(finalProductsArray)
+
+    })
+}
+
 ////////////////////////
 // TAGS
 ////////////////////////
@@ -272,6 +297,11 @@ function renderTags() {
 // *********************
 // NOTE: Fix this for actual product number that korona generates on submit   
 // *********************
+ // Get all products
+  // Sort the results by comparing all the lengths of numbers in the array
+  // Add the longest number to the variable productNumber
+  // Add 1 to the end of Product Number
+  
 // const getProductNumber = () => {
 //   const productNumber = document.getElementById('number');
 //   let requestUrl = url + 'products';
@@ -362,6 +392,7 @@ const init = () => {
   getCommodityGroups();
   getSectors();
   getPriceGroups();
+  getProducts();
   
   toggleSupplierBtn.addEventListener('click', toggleSupplierSection)
 

@@ -5,7 +5,8 @@
 <img src="./assets/addProductWalkThru061823.gif" alt="Walk Thru">
 
 <div>
-    <a href="">APIv3 Documentation</a>
+    <a href="https:manual.koronapos.com/korona-cloud-api-v3/">APIv3 Documentation</a>
+    <span> ^^^ search <a href="https://manual.koronapos.com/korona-cloud-api-v3/#tag/products/operation/addProducts">'addProducts'</a> </span>
 </div>
 
 <h2>Setup</h2>

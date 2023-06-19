@@ -6,6 +6,7 @@
 
 <div>
     <a href="https:manual.koronapos.com/korona-cloud-api-v3/">APIv3 Documentation</a>
+    <br>
     <span> ^^^ search <a href="https://manual.koronapos.com/korona-cloud-api-v3/#tag/products/operation/addProducts">'addProducts'</a> </span>
 </div>
 

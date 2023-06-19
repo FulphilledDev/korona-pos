@@ -15,12 +15,12 @@
     <li>
         <h3>Add User Credentials</h3>
         <p>Toward the middle left of the widget, under 'API Accesses', click the 'Add' button. This will display a modal in which you can add a new user for the endpoint. Make sure to enter a Login, Password, and Name. Select 'Korona.express' if you would like them to have full access to your account.</p>
-        <i src="./APIv3Credentials.png" alt="APIv3Credentials">    
+        <img src="./APIv3Credentials.png" alt="APIv3Credentials">    
     </li>
     <li>
         <h3>Creating the External System Call</h3>
         <p>Under 'Settings' select 'External System Calls', then 'New'. Give it a name, and place the file location of the index.html within the 'Display URL' input. Click 'Save' at the top.</p>
-        <i src="./ExternalSystemCall.png" alt="ExternalSystemCall">    
+        <img src="./ExternalSystemCall.png" alt="ExternalSystemCall">    
     </li>
     <li>
         <h3>Creating the Button</h3>
@@ -29,6 +29,6 @@
         <p>Next click on any open space within the button layout. At the far left of the page, click on 'Add Function'. Select a type of 'External System Call', and select the call we just created. Click 'Save' at the top of the page.</p>
         <br>
         <p>Finally, Retrieve Master Data at the POS, and you're all set! Happy Adding!</p>
-        <i src="./ExternalSystemCallButton.png" alt="CallButton">    
+        <img src="./ExternalSystemCallButton.png" alt="CallButton">    
     </li>
 </ol>

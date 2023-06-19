@@ -2,7 +2,7 @@
 
 <p> The following is a template we used to create a 'Quick Add' button within the KORONA POS system. Users can add the path of the index.html file as a 'Display URL' in External System Call under the Settings section in their Korona.cloud account. </p>
 
-<i src="./addProductWalkThru061823.mp4" alt="Walk Thru">
+<img src="./addProductWalkThru061823.mp4" alt="Walk Thru">
 
 <h2>Setup</h2>
 

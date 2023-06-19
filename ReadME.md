@@ -10,7 +10,7 @@
     <li>
         <h3>Add the APIv3 widget</h3>
         <p>Under Settings, click 'Data Exchange'. In the input area, type in 'APIv3'. You should see the '+Add' button turn bright orange. Click it. Now you should see an APIv3 widget with the following areas: Account-ID, Documentation, and Endpoint</p>
-        <i src="./APIv3Widget.png" alt="APIv3Widget">    
+        <img src="./APIv3Widget.png" alt="APIv3Widget">    
     </li>
     <li>
         <h3>Add User Credentials</h3>

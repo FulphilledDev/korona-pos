@@ -9,8 +9,5 @@ This project contains an HTML form and JavaScript code to submit product informa
 ![Issue](https://github.com/FulphilledDev/koronaPOS-addProduct/blob/release/2.0/ref/Screenshot.png)
 ## Areas for Improvement
 
-1. **Form Validation**: Implement validation logic to ensure that the required fields are filled out before submitting the form. Validate input formats, such as checking if the price field contains a valid number.
+1. **Error Handling**: Implement proper error handling for API requests. Display meaningful error messages to the user if there are any issues during submission.
 
-2. **Error Handling**: Implement proper error handling for API requests. Display meaningful error messages to the user if there are any issues during submission.
-
-3. **Code Organization and Structure**: Refactor the code to improve readability, maintainability, and adherence to best practices. Consider separating code into modules, applying consistent naming conventions, and organizing functions logically.

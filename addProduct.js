@@ -214,7 +214,7 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
         dropdownAutoWidth: true,
       });
 
-      selectElement.style.backgroundColor = 'black'
+
       
     })
     .catch((error) => {
@@ -270,39 +270,6 @@ const getProducts = () => {
 
     })
 }
-
-////////////////////////
-// TAGS
-////////////////////////
-
-// Array to store the tags
-let tags = [];
-
-// Function to add a tag
-function addTag() {
-  const tagInput = document.getElementById('tag-input');
-  const newTag = tagInput.value.trim();
-  
-  if (newTag !== '') {
-    tags.push(newTag);
-    tagInput.value = '';
-    renderTags();
-  }
-}
-
-// Function to render the tags
-function renderTags() {
-  const tagContainer = document.getElementById('tag-container');
-  tagContainer.innerHTML = '';
-  
-  for (let i = 0; i < tags.length; i++) {
-    const tagElement = document.createElement('span');
-    tagElement.innerText = tags[i];
-    tagElement.classList.add('tag-input');
-    tagContainer.appendChild(tagElement);
-  }
-}
-
     
     
 // *********************
@@ -313,51 +280,6 @@ function renderTags() {
   // Add the longest number to the variable productNumber
   // Add 1 to the end of Product Number
 
-// const getProductNumber = () => {
-//   const productNumber = document.getElementById('number');
-//   let requestUrl = url + 'products';
-
-//   fetch(requestUrl, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': 'Basic ' + btoa(username + ':' + password),
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       const results = data.results
-//       console.log(results)
-
-//       results.sort((a, b) => a.number.length - b.number.length)
-      
-//       // Longest product number
-//       let longestNumber = '';
-//       results.forEach(product => {
-//         const productNumber = product.number.toString();
-//         if (productNumber.length > longestNumber.length) {
-//           longestNumber = productNumber;
-//         }
-//       });
-//       console.log('Longest product number:', longestNumber);
-
-//       // Other longest product number
-      
-//       const assignLastProductNumber = longestNumber ? longestNumber : "0";
-//       const nextProductNumber = assignLastProductNumber + "1";
-
-//       if (!results.includes(nextProductNumber)) {
-//         productNumber.textContent = nextProductNumber
-//         productNumber.value = nextProductNumber
-//       } else {
-//         productNumber.textContent = 'Auto generated number exists. Make your own.'
-//       }
-      
-//     })
-//     .catch((error) => {
-//       console.error('Error:', error);
-//     });
-// };
 
 //////////////////////////
 // RESET UI

@@ -249,34 +249,5 @@ input[type="submit"]:hover {
   }
 
 /* Custom Simplebar scrollbar styles */
-.simplebar-scrollbar::before {
-    background-color: orange !important;
-  }
-  
-  .simplebar-track.simplebar-vertical {
-    width: 20px !important;
-  }
-  
-  .simplebar-scrollbar.simplebar-visible.simplebar-vertical {
-    width: 20px !important;
-  }
-  
-  .simplebar-track.simplebar-horizontal {
-    height: 20px !important;
-  }
-  
-  .simplebar-scrollbar.simplebar-visible.simplebar-horizontal {
-    height: 20px !important;
-  }
-  
-  .simplebar-scrollbar.simplebar-visible:before {
-    content: "" !important;
-    display: block !important;
-    position: absolute !important;
-    background-color: orange !important;
-    width: 100% !important;
-    height: 100% !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
+
   

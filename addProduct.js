@@ -1,7 +1,7 @@
 // API Credentials for one user
-let url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-let username = "main";
-let password = "1234";
+let url = "https://167.koronacloud.com/web/api/v3/accounts/dd0b749a-56f5-4185-a782-590230a8530f/";
+let username = "support";
+let password = "support";
 
 // Product Object elements we need
 // 'number' is being automatically generated on submission to korona for assurance of not overwriting previous data...still need to figure out how to replace that
@@ -35,10 +35,27 @@ let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYY
 ///////////////////////
 // FORM SUBMIT
 ///////////////////////
+const submittedProducts = []; // Array to store submitted products during the current session
+
+const displaySubmittedProducts = (productName, productCode) => {
+  // Get the container where you want to display the products
+  const productContainer = document.getElementById('submittedProductsList');
+
+  // Create a new list item
+  const listItem = document.createElement('li');
+
+  // Set the text of the list item to the product name and UPC code
+  listItem.textContent = `Product Name: ${productName}, UPC Code: ${productCode}`;
+
+  // Add the new list item to the container
+  productContainer.appendChild(listItem);
+};
 
 const onProductSubmit = (event) => {
     event.preventDefault();
-
+//this is for submitted products
+    let productCodeValue = product_code.value;
+    let productNameValue = productName.value;
     const product = [{
       // "number": number,
       "assortment": {
@@ -129,6 +146,8 @@ const onProductSubmit = (event) => {
         if (serverResponse.includes('ADDED')) {
           resetForm();
           showResponseBox();
+          // Update the displayed submitted products
+          displaySubmittedProducts(productNameValue, productCodeValue);
         }
 
         

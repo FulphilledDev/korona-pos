@@ -212,6 +212,8 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
       $(selectElement).select2({
         maximumSelectionSize: 500,
         dropdownAutoWidth: true,
+        theme: "classic",
+        class: "resolve"
       });
 
 

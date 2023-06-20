@@ -36,6 +36,24 @@ let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYY
 // FORM SUBMIT
 ///////////////////////
 
+const submittedProducts = []; // Array to store submitted products during the current session
+
+const displaySubmittedProducts = (productName, productCode) => {
+  // Get the container where you want to display the products
+  const productContainer = document.getElementById('submittedProductsList');
+
+  // Create a new list item
+  const listItem = document.createElement('li');
+  listItem.style.listStyle = 'none';
+  listItem.style.textAlign = 'center'
+
+  // Set the text of the list item to the product name and UPC code
+  listItem.textContent = `Product Name: ${productName}, UPC Code: ${productCode}`;
+
+  // Add the new list item to the container
+  productContainer.appendChild(listItem);
+};
+
 const onProductSubmit = (event) => {
     event.preventDefault();
 
@@ -122,12 +140,18 @@ const onProductSubmit = (event) => {
     })
     .then(response => response.text())
     .then(data => {
-        console.log(data)
+        const responseData = JSON.parse(data)
 
-        const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + data;
+        const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
 
         if (serverResponse.includes('ADDED')) {
+          // Update the displayed submitted products
+          displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
+
+          // Reset form values
           resetForm();
+
+          // Update display with response from server
           showResponseBox();
         }
 
@@ -267,8 +291,8 @@ const getProducts = () => {
       // Sort by Product Name
       // products.sort((a, b) => a.name.localeCompare(b.name))
       finalProductsArray = products[products.length - 1]
-      console.log(products)
-      console.log(finalProductsArray)
+      // console.log(products)
+      // console.log(finalProductsArray)
 
     })
 }

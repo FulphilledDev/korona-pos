@@ -211,9 +211,10 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
       // Initialize Select2 on the select element
       $(selectElement).select2({
         maximumSelectionSize: 500,
+        dropdownAutoWidth: true,
       });
 
-      selectElement.style.padding = '3rem'
+      selectElement.style.backgroundColor = 'black'
       
     })
     .catch((error) => {

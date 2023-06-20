@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplebar/5.3.6/simplebar.min.css" />
+</head>
+<body>
+<div id="page-container">
+    <div class="navbar">
+        <a class="navbar-brand" href="#">KORONA.cloud - Add Product</a>
+    </div>
+    <div class="form-container" data-simplebar>
+        <div class="container">
+            <div class="response-container">
+                <div class="response-box">
+                    <span id="serverResponse"></span>
+                </div>
+            </div>
+            <div class="form-container">
+                <form id="productForm">
+                    <section>
+                        <div>
+                            <p>GENERAL</p>
+                        </div>
+                        <div class="section-div">
+                            <div class="form-div">
+                                <label for="product_name">Name:</label>
+                                <input class='product-input' type="text" id="product_name" name="product_name" value="">
+                            </div>
+                            <div class="form-div">
+                                <label for="product_code">UPC Code:</label>
+                                <input class='product-input' type="text" id="product_code" name="product_code">
+                            </div>
+                            <div class="form-div">
+                                <label for="values">Price:</label>
+                                <input class='product-input' type="text" id="values" name="values">
+                            </div>
+                            <div class="form-div dropdown-div">
+                                <label for="commodity_group_name">Commodity Group:</label>
+                                <select class='product-input' type="text" id="commodity_group_name" name="commodity_group_name" value="" style="width: 100%">
+                                    <option value="">-- Choose a Group --</option>
+                                </select>
+                            </div>
+                            <div class="form-div dropdown-div">
+                                <label for="assortment_name">Assortment:</label>
+                                <select class='product-input' type="text" id="assortment_name" name="assortment_name" value="" style="width: 100%">
+                                </select>
+                            </div>
+                            <div class="form-div dropdown-div">
+                                <label for="price-group">Price Group:</label>
+                                <select class='product-input' type="text" id="price-group" name="price-group" value="" style="width: 100%"></select>
+                            </div>
+                            <div class="form-div dropdown-div">
+                                <label for="sector_name">Sector:</label>
+                                <select class='product-input' type="text" id="sector_name" name="sector_name" value="" style="width: 100%"></select>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div>
+                            <p>ADDITIONAL INFORMATION</p>
+                        </div>
+                        <div>
+                            <div class="checkbox-div">
+                                <label for="price_changable">Price Changeable? </label>
+                                <input class='product-input' type="checkbox" id="price_changable" name="price_changable" value="" checked>
+                            </div>
+                            <div class="checkbox-div">
+                                <label for="track_inventory">Track Inventory? </label>
+                                <input class='product-input' type="checkbox" id="track_inventory" name="track_inventory" value="" checked>
+                            </div>
+                            <div class="checkbox-div">
+                                <label for="discountable">Is Discountable? </label>
+                                <input class='product-input' type="checkbox" id="discountable" name="discountable" value="" checked>
+                            </div>
+                        </div>
+                    </section>
+                    <section>
+                        <div>
+                            <p>SUPPLIER INFORMATION<button id="toggle_supplier_btn" type="button">Show</button></p>
+                        </div>
+                        <div  id="supplier_section">
+                            <div class="supplier-section-div">
+                                <div class="supplier-form-div dropdown-div">
+                                    <label for="supplier_name">Supplier name:</label>
+                                    <select class='product-input' type="text" id="supplier_name" name="supplier_name" value="">
+                                        <option value="">-- Choose a supplier --</option>
+                                    </select>
+                                </div>
+                                <div class="supplier-form-div">
+                                    <label for="orderCode">Order code:</label>
+                                    <input class='product-input' type="text" id="orderCode" name="orderCode" value="">
+                                </div>
+                                <div class="supplier-form-div">
+                                    <label for="supplier_value">Supplier Item Cost:</label>
+                                    <input class='product-input' type="text" id="supplier_value" name="supplier_value" value="">
+                                </div>
+                                <div class="supplier-form-div">
+                                    <label for="containerSize">Minimum Order Quantity:</label>
+                                    <input class='product-input' type="text" id="containerSize" name="containerSize" value="">
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="submit-div">
+                        <input type="submit" value="Submit" >
+                    </div>
+                </form>
+            </div>
+            <div class="list-container">
+                <h2>Submitted Products:</h2>
+                <ul id="submittedProductsList"></ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./addProduct.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/5.3.6/simplebar.min.js"></script>
+</body>
+</html>

@@ -3,6 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
+
 </head>
 <body>
 
@@ -52,7 +54,7 @@
             </div>
 
             <!-- getCommodityGroups() -->
-            <div class="form-div">
+            <div class="form-div dropdown-div">
                 <label for="commodity_group_name">Commodity Group:</label>
                 <select class='product-input' type="text" id="commodity_group_name" name="commodity_group_name" value="">
                     <option value="">-- Choose a Group --</option>
@@ -60,18 +62,18 @@
             </div>
             
             <!-- getAssortments() -->
-            <div class="form-div">
+            <div class="form-div dropdown-div">
                 <label for="assortment_name">Assortment:</label>
                 <select class='product-input' type="text" id="assortment_name" name="assortment_name" value="">
                 </select>
             </div>
 
-            <div class="form-div">
+            <div class="form-div dropdown-div">
                 <label for="price-group">Price Group:</label>
                 <select class='product-input' type="text" id="price-group" name="price-group" value=""></select>
             </div>
 
-            <div class="form-div">
+            <div class="form-div dropdown-div">
                 <label for="sector_name">Sector:</label>
                 <select class='product-input' type="text" id="sector_name" name="sector_name" value=""></select>
             </div>
@@ -129,7 +131,7 @@
                 <div class="supplier-section-div">
 
                 
-                <div class="supplier-form-div">
+                <div class="supplier-form-div dropdown-div">
                 <label for="supplier_name">Supplier name:</label>
                 <select class='product-input' type="text" id="supplier_name" name="supplier_name" value="">
                     <option value="">-- Choose a supplier --</option>
@@ -167,6 +169,9 @@
 
 <script src="./addProduct.js"></script>
 <script src="./navGetRequests.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
 
 </body>
 </html>

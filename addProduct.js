@@ -171,7 +171,7 @@ const toggleSupplierSection = () => {
 ////////////////////////
 
 // Create Reusable Dropdown for Supplier, Assortments, Commodity Group, and Sector Name Options
-const populateDropdown = (requestUrl, selectElement, optionValue, optionText) => {
+const populateDropdown = (requestUrl, selectElement, optionValue, optionText, maxHeight) => {
   fetch(requestUrl, {
     method: 'GET',
     headers: {
@@ -188,23 +188,33 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText) =>
       const hasDefault = data.results.some((item) => item[optionText] === 'Default');
       const hasGeneralAssortment = data.results.some((item) => item[optionText] === 'General Assortment')
 
+      // Clear any existing options
+      $(selectElement).empty();
+
       // Add 'General' and 'Default' options if not already present
       data.results.forEach((item) => {
-        const option = document.createElement('option');
-        option.value = item[optionValue];
-        option.appendChild(document.createTextNode(item[optionText]));
+        const option = new Option(item[optionText], item[optionValue]);
         
         // Set selected option to 'General' or 'Default' if it exists in data.results
         if (item[optionText] === 'General' && hasGeneral) {
-          option.selected = true;
+          $(option).prop('selected', true);
         } else if (item[optionText] === 'Default' && hasDefault) {
-          option.selected = true;
+          $(option).prop('selected', true);
         } else if (item[optionText] === 'General Assortment' && hasGeneralAssortment) {
-          option.selected = true;
+          $(option).prop('selected', true);
         }
         
-        selectElement.appendChild(option);
+        $(selectElement).append(option);        // selectElement.style.maxHeight = maxHeight;
+        // selectElement.style.overflow = 'scroll';
       });
+
+      // Initialize Select2 on the select element
+      $(selectElement).select2({
+        maximumSelectionSize: 500,
+      });
+
+      selectElement.style.padding = '3rem'
+      
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -301,7 +311,7 @@ function renderTags() {
   // Sort the results by comparing all the lengths of numbers in the array
   // Add the longest number to the variable productNumber
   // Add 1 to the end of Product Number
-  
+
 // const getProductNumber = () => {
 //   const productNumber = document.getElementById('number');
 //   let requestUrl = url + 'products';

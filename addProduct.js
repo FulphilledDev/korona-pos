@@ -129,8 +129,18 @@ const onProductSubmit = (event) => {
     console.log(product)
 
     let requestUrl = url + 'products';
+    const submittedProductPrice = product[0].prices[0].value
+    const submittedSupplierCost = product[0].supplierPrices[0].value
 
-    fetch(requestUrl, {
+    // TO DO:
+    // Check for Product Code Exists
+    // Check for Product Name Exists
+
+    // Check for Supplier Item cost < Product Price
+    if (submittedProductPrice <= submittedSupplierCost) {
+      alert('Please make sure that Product Price is greater than Supplier Item Cost.')
+    } else {
+      fetch(requestUrl, {
         method: 'POST',
         body: JSON.stringify(product),
         headers: {
@@ -140,9 +150,15 @@ const onProductSubmit = (event) => {
     })
     .then(response => response.text())
     .then(data => {
-        const responseData = JSON.parse(data)
 
+      
+      
+        console.log(data)
+        const responseData = JSON.parse(data)
+        console.log(responseData)
         const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+
+
 
         if (serverResponse.includes('ADDED')) {
           // Update the displayed submitted products
@@ -160,6 +176,9 @@ const onProductSubmit = (event) => {
     .catch((error) => {
         console.error('Error:', error);
     })
+    }
+
+    
     
     
 };

@@ -1,7 +1,11 @@
+// Import checkProductExists function and fetchAllProducts function from check.js
+import { checkProductExists, fetchAllProducts } from './check.js';
+
 // API Credentials for one user
-let url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-let username = "main";
-let password = "1234";
+let url = "https://167.koronacloud.com/web/api/v3/accounts/dd0b749a-56f5-4185-a782-590230a8530f/";
+let username = "support";
+let password = "support";
+
 
 // Product Object elements we need
 // 'number' is being automatically generated on submission to korona for assurance of not overwriting previous data...still need to figure out how to replace that
@@ -54,133 +58,130 @@ const displaySubmittedProducts = (productName, productCode) => {
   productContainer.appendChild(listItem);
 };
 
-const onProductSubmit = (event) => {
-    event.preventDefault();
+const onProductSubmit = async (event) => {
+  event.preventDefault();
 
-    const product = [{
-      // "number": number,
-      "assortment": {
-          "name": assortment_name,
-      },
-      "codes": [{
-          "productCode": product_code,
-      }],
-      "commodityGroup": {
-          "name": commodity_group_name,
-      },
-      "name": productName,
-      "priceChangable": price_changable.checked,
-      "discountable": discountable.checked,
-      "trackInventory": track_inventory.checked,
-      "sector": {
-          "name": sector_name
-      },
-      "prices": [
-          {
-              "value": prices,
-              "priceGroup": {
-                  "name": priceGroup
-              },
-              "productCode": product_code
-          }
-      ],
-      "supplierPrices": [
-          {
-              "supplier": {
-                  "name": supplier_name
-              },
-              "orderCode": supplierOrderCode,
-              "value": supplierItemCost,
-              "containerSize": supplierPackageQuantity,
-          }
-      ]
-    }];
+  const product = [{
+    // "number": number,
+    "assortment": {
+        "name": assortment_name,
+    },
+    "codes": [{
+        "productCode": product_code,
+    }],
+    "commodityGroup": {
+        "name": commodity_group_name,
+    },
+    "name": productName,
+    "priceChangable": price_changable.checked,
+    "discountable": discountable.checked,
+    "trackInventory": track_inventory.checked,
+    "sector": {
+        "name": sector_name
+    },
+    "prices": [
+        {
+            "value": prices,
+            "priceGroup": {
+                "name": priceGroup
+            },
+            "productCode": product_code
+        }
+    ],
+    "supplierPrices": [
+        {
+            "supplier": {
+                "name": supplier_name
+            },
+            "orderCode": supplierOrderCode,
+            "value": supplierItemCost,
+            "containerSize": supplierPackageQuantity,
+        }
+    ]
+  }];
 
-    const getOptionValue = (option) => {
-      const selectElement = document.getElementById(option);
-      const selectedOption = selectElement.options[selectElement.selectedIndex];
-      const selectedValue = selectedOption.value;
+  const getOptionValue = (option) => {
+    const selectElement = document.getElementById(option);
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const selectedValue = selectedOption.value;
 
-      // // Assign the selected value to the name property
-      if (option === 'commodity_group_name') {
-        product[0].commodityGroup.name = selectedValue;
-      } else if (option === 'sector_name') {
-        product[0].sector.name = selectedValue;
-      } else if (option === 'assortment_name') {
-        product[0].assortment.name = selectedValue;
-      } else if (option === 'price-group') {
-        let productPrice = product[0].prices
-        productPrice[0].priceGroup.name = selectedValue;
-      } else if (option === 'supplier_name') {
-        let supplierPrice = product[0].supplierPrices
-        supplierPrice[0].supplier.name = selectedValue;
-      }
+    // // Assign the selected value to the name property
+    if (option === 'commodity_group_name') {
+      product[0].commodityGroup.name = selectedValue;
+    } else if (option === 'sector_name') {
+      product[0].sector.name = selectedValue;
+    } else if (option === 'assortment_name') {
+      product[0].assortment.name = selectedValue;
+    } else if (option === 'price-group') {
+      let productPrice = product[0].prices
+      productPrice[0].priceGroup.name = selectedValue;
+    } else if (option === 'supplier_name') {
+      let supplierPrice = product[0].supplierPrices
+      supplierPrice[0].supplier.name = selectedValue;
+    }
       
-    };
+  };
 
     
 
-    getOptionValue('commodity_group_name')
-    getOptionValue('assortment_name')
-    getOptionValue('sector_name')
-    getOptionValue('price-group')    
-    getOptionValue('supplier_name')
+  getOptionValue('commodity_group_name')
+  getOptionValue('assortment_name')
+  getOptionValue('sector_name')
+  getOptionValue('price-group')    
+  getOptionValue('supplier_name')
 
-    console.log(product)
+  console.log(product)
 
-    let requestUrl = url + 'products';
-    const submittedProductPrice = product[0].prices[0].value
-    const submittedSupplierCost = product[0].supplierPrices[0].value
+  let requestUrl = url + 'products';
+  const submittedProductPrice = product[0].prices[0].value
+  const submittedSupplierCost = product[0].supplierPrices[0].value
 
-    // TO DO:
-    // Check for Product Code Exists
-    // Check for Product Name Exists
+  // Check if the product exists
+  const exists = await checkProductExists(productName, product_code);
 
-    // Check for Supplier Item cost < Product Price
-    if (submittedProductPrice <= submittedSupplierCost) {
-      alert('Please make sure that Product Price is greater than Supplier Item Cost.')
-    } else {
-      fetch(requestUrl, {
-        method: 'POST',
-        body: JSON.stringify(product),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(username + ":" + password)
-        },
-    })
+  if (exists) {
+    alert('Product already exists');
+    return;
+  }
+
+//TO DO fix supplier item cost <= product price check
+
+  // Check for Supplier Item cost < Product Price
+  //if (submittedProductPrice <= submittedSupplierCost) {
+  //  alert('Please make sure that Product Price is greater than Supplier Item Cost.');
+   // return;
+  //}
+
+  fetch(requestUrl, {
+    method: 'POST',
+    body: JSON.stringify(product),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(username + ":" + password)
+    },
+  })
     .then(response => response.text())
     .then(data => {
 
-      
-      
-        console.log(data)
-        const responseData = JSON.parse(data)
-        console.log(responseData)
-        const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+      console.log(data)
+      const responseData = JSON.parse(data)
+      console.log(responseData)
+      const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
 
+      if (serverResponse.includes('ADDED')) {
+        // Update the displayed submitted products
+        displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
 
+        // Reset form values
+        resetForm();
 
-        if (serverResponse.includes('ADDED')) {
-          // Update the displayed submitted products
-          displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
-
-          // Reset form values
-          resetForm();
-
-          // Update display with response from server
-          showResponseBox();
-        }
-
-        
+        // Update display with response from server
+        showResponseBox();
+      }
     })
     .catch((error) => {
-        console.error('Error:', error);
-    })
-    }
-
-    
-    
-    
+      console.error('Error:', error);
+    });
 };
 
 const showResponseBox = () => {
@@ -247,8 +248,7 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
           $(option).prop('selected', true);
         }
         
-        $(selectElement).append(option);        // selectElement.style.maxHeight = maxHeight;
-        // selectElement.style.overflow = 'scroll';
+        $(selectElement).append(option);
       });
 
       // Initialize Select2 on the select element
@@ -258,9 +258,6 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
         theme: "classic",
         class: "resolve"
       });
-
-
-      
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -292,31 +289,6 @@ const getPriceGroups = () => {
   populateDropdown(requestUrl, priceGroup, 'name', 'name');
 };
 
-const getProducts = () => {
-  let requestUrl = url + 'products';
-
-  fetch(requestUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa(username + ':' + password),
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      products = data.results
-      // Sort by Product Number
-      products.sort((a, b) => a.number - b.number)
-      // Sort by Product Name
-      // products.sort((a, b) => a.name.localeCompare(b.name))
-      finalProductsArray = products[products.length - 1]
-      // console.log(products)
-      // console.log(finalProductsArray)
-
-    })
-}
-    
-    
 // *********************
 // NOTE: Fix this for actual product number that korona generates on submit   
 // *********************
@@ -363,14 +335,12 @@ const init = () => {
   supplierItemCost.addEventListener('input', supplierCostValue)
   supplierPackageQuantity.addEventListener('input', supplierPackageValue)
 
-
-  // getProductNumber();
   getAssortmentNames();
   getSuppliers();
   getCommodityGroups();
   getSectors();
   getPriceGroups();
-  getProducts();
+  //getProducts();
   
   toggleSupplierBtn.addEventListener('click', toggleSupplierSection)
 

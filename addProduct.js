@@ -121,36 +121,30 @@ const onProductSubmit = async (event) => {
     }
       
   };
+  
+    getOptionValue('commodity_group_name')
+    getOptionValue('assortment_name')
+    getOptionValue('sector_name')
+    getOptionValue('price-group')    
+    getOptionValue('supplier_name')
 
-    
+    console.log(`Product object: ${product}`)
 
-  getOptionValue('commodity_group_name')
-  getOptionValue('assortment_name')
-  getOptionValue('sector_name')
-  getOptionValue('price-group')    
-  getOptionValue('supplier_name')
+    const submittedProductPrice = product[0].prices[0].value
+    const submittedSupplierCost = product[0].supplierPrices[0].value
 
-  console.log(product)
+    // TO DO:
+    // Check for Product Code Exists
+    // Check for Product Name Exists
+    // ^^^ 
+    // Default for commodity group 'Unassigned'
+    // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
 
-  let requestUrl = url + 'products';
-  const submittedProductPrice = product[0].prices[0].value
-  const submittedSupplierCost = product[0].supplierPrices[0].value
-
-  // Check if the product exists
-  const exists = await checkProductExists(productName, product_code);
-
-  if (exists) {
-    alert('Product already exists');
-    return;
-  }
-
-//TO DO fix supplier item cost <= product price check
-
-  // Check for Supplier Item cost < Product Price
-  //if (submittedProductPrice <= submittedSupplierCost) {
-  //  alert('Please make sure that Product Price is greater than Supplier Item Cost.');
-   // return;
-  //}
+    // Check for Supplier Item cost < Product Price
+    if (submittedProductPrice <= submittedSupplierCost) {
+      alert('Please make sure that Product Price is greater than Supplier Item Cost.')
+    } else {
+      let requestUrl = url + 'products';
 
   fetch(requestUrl, {
     method: 'POST',
@@ -167,7 +161,16 @@ const onProductSubmit = async (event) => {
       const responseData = JSON.parse(data)
       console.log(responseData)
       const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+    
+     // Check if the product exists
+      const exists = await checkProductExists(productName, product_code);
 
+
+      if (exists) {
+        alert('Product already exists');
+        return;
+      }
+    
       if (serverResponse.includes('ADDED')) {
         // Update the displayed submitted products
         displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
@@ -289,6 +292,37 @@ const getPriceGroups = () => {
   populateDropdown(requestUrl, priceGroup, 'name', 'name');
 };
 
+
+// const getProducts = () => {
+//   let requestUrl = url + 'products?page=11';
+//   // ^^^ Need to modify this to make a query for the last page of returned results...or something
+
+//   fetch(requestUrl, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': 'Basic ' + btoa(username + ':' + password),
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log(data)
+//       console.log(`Returned data: ${JSON.stringify(data)}`)
+//       // ^^^ This returns a result of the first 1000 products...not all of them
+//       const productsData = data.results
+//       // Sort by Product Number
+//       productsData.sort((a, b) => a.number - b.number)
+//       // Sort by Product Name
+//       // products.sort((a, b) => a.name.localeCompare(b.name))
+//       finalProductsArray = productsData[productsData.length - 1]
+//       console.log(`All Products: ${JSON.stringify(productsData)}`)
+//       console.log(`All Products Length: ${productsData.length}`)
+//       console.log(`Final Product of Products Array: ${JSON.stringify(finalProductsArray)}`)
+//       console.log(`Final Product Code of Products Array: ${finalProductsArray.codes[0].productCode}`)
+
+//     })
+// }
+    
 // *********************
 // NOTE: Fix this for actual product number that korona generates on submit   
 // *********************

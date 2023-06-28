@@ -126,20 +126,24 @@ const onProductSubmit = (event) => {
     getOptionValue('price-group')    
     getOptionValue('supplier_name')
 
-    console.log(product)
+    console.log(`Product object: ${product}`)
 
-    let requestUrl = url + 'products';
     const submittedProductPrice = product[0].prices[0].value
     const submittedSupplierCost = product[0].supplierPrices[0].value
 
     // TO DO:
     // Check for Product Code Exists
     // Check for Product Name Exists
+    // ^^^ 
+    // Default for commodity group 'Unassigned'
+    // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
 
     // Check for Supplier Item cost < Product Price
     if (submittedProductPrice <= submittedSupplierCost) {
       alert('Please make sure that Product Price is greater than Supplier Item Cost.')
     } else {
+      let requestUrl = url + 'products';
+
       fetch(requestUrl, {
         method: 'POST',
         body: JSON.stringify(product),
@@ -151,25 +155,22 @@ const onProductSubmit = (event) => {
     .then(response => response.text())
     .then(data => {
 
-      
-      
-        console.log(data)
-        const responseData = JSON.parse(data)
-        console.log(responseData)
-        const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+      console.log(`Data response object: ${data}`)
+      const responseData = JSON.parse(data)
+      console.log(`Parsed Response Data: ${responseData}`)
+      const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
 
 
+      if (serverResponse.includes('ADDED')) {
+        // Update the displayed submitted products
+        displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
 
-        if (serverResponse.includes('ADDED')) {
-          // Update the displayed submitted products
-          displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
+        // Reset form values
+        resetForm();
 
-          // Reset form values
-          resetForm();
-
-          // Update display with response from server
-          showResponseBox();
-        }
+        // Update display with response from server
+        showResponseBox();
+      }
 
         
     })
@@ -293,7 +294,8 @@ const getPriceGroups = () => {
 };
 
 const getProducts = () => {
-  let requestUrl = url + 'products';
+  let requestUrl = url + 'products?page=11';
+  // ^^^ Need to modify this to make a query for the last page of returned results...or something
 
   fetch(requestUrl, {
     method: 'GET',
@@ -304,14 +306,19 @@ const getProducts = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      products = data.results
+      console.log(data)
+      console.log(`Returned data: ${JSON.stringify(data)}`)
+      // ^^^ This returns a result of the first 1000 products...not all of them
+      const productsData = data.results
       // Sort by Product Number
-      products.sort((a, b) => a.number - b.number)
+      productsData.sort((a, b) => a.number - b.number)
       // Sort by Product Name
       // products.sort((a, b) => a.name.localeCompare(b.name))
-      finalProductsArray = products[products.length - 1]
-      // console.log(products)
-      // console.log(finalProductsArray)
+      finalProductsArray = productsData[productsData.length - 1]
+      console.log(`All Products: ${JSON.stringify(productsData)}`)
+      console.log(`All Products Length: ${productsData.length}`)
+      console.log(`Final Product of Products Array: ${JSON.stringify(finalProductsArray)}`)
+      console.log(`Final Product Code of Products Array: ${finalProductsArray.codes[0].productCode}`)
 
     })
 }

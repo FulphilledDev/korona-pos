@@ -1,7 +1,11 @@
+// Import checkProductExists function and fetchAllProducts function from check.js
+import { checkProductExists, fetchAllProducts } from './check.js';
+
 // API Credentials for one user
-let url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-let username = "main";
-let password = "1234";
+let url = "https://167.koronacloud.com/web/api/v3/accounts/dd0b749a-56f5-4185-a782-590230a8530f/";
+let username = "support";
+let password = "support";
+
 
 // Product Object elements we need
 // 'number' is being automatically generated on submission to korona for assurance of not overwriting previous data...still need to figure out how to replace that
@@ -54,72 +58,70 @@ const displaySubmittedProducts = (productName, productCode) => {
   productContainer.appendChild(listItem);
 };
 
-const onProductSubmit = (event) => {
-    event.preventDefault();
+const onProductSubmit = async (event) => {
+  event.preventDefault();
 
-    const product = [{
-      // "number": number,
-      "assortment": {
-          "name": assortment_name,
-      },
-      "codes": [{
-          "productCode": product_code,
-      }],
-      "commodityGroup": {
-          "name": commodity_group_name,
-      },
-      "name": productName,
-      "priceChangable": price_changable.checked,
-      "discountable": discountable.checked,
-      "trackInventory": track_inventory.checked,
-      "sector": {
-          "name": sector_name
-      },
-      "prices": [
-          {
-              "value": prices,
-              "priceGroup": {
-                  "name": priceGroup
-              },
-              "productCode": product_code
-          }
-      ],
-      "supplierPrices": [
-          {
-              "supplier": {
-                  "name": supplier_name
-              },
-              "orderCode": supplierOrderCode,
-              "value": supplierItemCost,
-              "containerSize": supplierPackageQuantity,
-          }
-      ]
-    }];
+  const product = [{
+    // "number": number,
+    "assortment": {
+        "name": assortment_name,
+    },
+    "codes": [{
+        "productCode": product_code,
+    }],
+    "commodityGroup": {
+        "name": commodity_group_name,
+    },
+    "name": productName,
+    "priceChangable": price_changable.checked,
+    "discountable": discountable.checked,
+    "trackInventory": track_inventory.checked,
+    "sector": {
+        "name": sector_name
+    },
+    "prices": [
+        {
+            "value": prices,
+            "priceGroup": {
+                "name": priceGroup
+            },
+            "productCode": product_code
+        }
+    ],
+    "supplierPrices": [
+        {
+            "supplier": {
+                "name": supplier_name
+            },
+            "orderCode": supplierOrderCode,
+            "value": supplierItemCost,
+            "containerSize": supplierPackageQuantity,
+        }
+    ]
+  }];
 
-    const getOptionValue = (option) => {
-      const selectElement = document.getElementById(option);
-      const selectedOption = selectElement.options[selectElement.selectedIndex];
-      const selectedValue = selectedOption.value;
+  const getOptionValue = (option) => {
+    const selectElement = document.getElementById(option);
+    const selectedOption = selectElement.options[selectElement.selectedIndex];
+    const selectedValue = selectedOption.value;
 
-      // // Assign the selected value to the name property
-      if (option === 'commodity_group_name') {
-        product[0].commodityGroup.name = selectedValue;
-      } else if (option === 'sector_name') {
-        product[0].sector.name = selectedValue;
-      } else if (option === 'assortment_name') {
-        product[0].assortment.name = selectedValue;
-      } else if (option === 'price-group') {
-        let productPrice = product[0].prices
-        productPrice[0].priceGroup.name = selectedValue;
-      } else if (option === 'supplier_name') {
-        let supplierPrice = product[0].supplierPrices
-        supplierPrice[0].supplier.name = selectedValue;
-      }
+    // // Assign the selected value to the name property
+    if (option === 'commodity_group_name') {
+      product[0].commodityGroup.name = selectedValue;
+    } else if (option === 'sector_name') {
+      product[0].sector.name = selectedValue;
+    } else if (option === 'assortment_name') {
+      product[0].assortment.name = selectedValue;
+    } else if (option === 'price-group') {
+      let productPrice = product[0].prices
+      productPrice[0].priceGroup.name = selectedValue;
+    } else if (option === 'supplier_name') {
+      let supplierPrice = product[0].supplierPrices
+      supplierPrice[0].supplier.name = selectedValue;
+    }
       
-    };
-
-    
-
+  };
+  
     getOptionValue('commodity_group_name')
     getOptionValue('assortment_name')
     getOptionValue('sector_name')
@@ -144,23 +146,31 @@ const onProductSubmit = (event) => {
     } else {
       let requestUrl = url + 'products';
 
-      fetch(requestUrl, {
-        method: 'POST',
-        body: JSON.stringify(product),
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(username + ":" + password)
-        },
-    })
+  fetch(requestUrl, {
+    method: 'POST',
+    body: JSON.stringify(product),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(username + ":" + password)
+    },
+  })
     .then(response => response.text())
     .then(data => {
 
-      console.log(`Data response object: ${data}`)
+      console.log(data)
       const responseData = JSON.parse(data)
-      console.log(`Parsed Response Data: ${responseData}`)
+      console.log(responseData)
       const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+    
+     // Check if the product exists
+      const exists = await checkProductExists(productName, product_code);
 
 
+      if (exists) {
+        alert('Product already exists');
+        return;
+      }
+    
       if (serverResponse.includes('ADDED')) {
         // Update the displayed submitted products
         displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
@@ -171,17 +181,10 @@ const onProductSubmit = (event) => {
         // Update display with response from server
         showResponseBox();
       }
-
-        
     })
     .catch((error) => {
-        console.error('Error:', error);
-    })
-    }
-
-    
-    
-    
+      console.error('Error:', error);
+    });
 };
 
 const showResponseBox = () => {
@@ -248,8 +251,7 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
           $(option).prop('selected', true);
         }
         
-        $(selectElement).append(option);        // selectElement.style.maxHeight = maxHeight;
-        // selectElement.style.overflow = 'scroll';
+        $(selectElement).append(option);
       });
 
       // Initialize Select2 on the select element
@@ -259,9 +261,6 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
         theme: "classic",
         class: "resolve"
       });
-
-
-      
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -293,36 +292,36 @@ const getPriceGroups = () => {
   populateDropdown(requestUrl, priceGroup, 'name', 'name');
 };
 
-const getProducts = () => {
-  let requestUrl = url + 'products?page=11';
-  // ^^^ Need to modify this to make a query for the last page of returned results...or something
 
-  fetch(requestUrl, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa(username + ':' + password),
-    },
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      console.log(`Returned data: ${JSON.stringify(data)}`)
-      // ^^^ This returns a result of the first 1000 products...not all of them
-      const productsData = data.results
-      // Sort by Product Number
-      productsData.sort((a, b) => a.number - b.number)
-      // Sort by Product Name
-      // products.sort((a, b) => a.name.localeCompare(b.name))
-      finalProductsArray = productsData[productsData.length - 1]
-      console.log(`All Products: ${JSON.stringify(productsData)}`)
-      console.log(`All Products Length: ${productsData.length}`)
-      console.log(`Final Product of Products Array: ${JSON.stringify(finalProductsArray)}`)
-      console.log(`Final Product Code of Products Array: ${finalProductsArray.codes[0].productCode}`)
+// const getProducts = () => {
+//   let requestUrl = url + 'products?page=11';
+//   // ^^^ Need to modify this to make a query for the last page of returned results...or something
 
-    })
-}
-    
+//   fetch(requestUrl, {
+//     method: 'GET',
+//     headers: {
+//       'Content-Type': 'application/json',
+//       'Authorization': 'Basic ' + btoa(username + ':' + password),
+//     },
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       console.log(data)
+//       console.log(`Returned data: ${JSON.stringify(data)}`)
+//       // ^^^ This returns a result of the first 1000 products...not all of them
+//       const productsData = data.results
+//       // Sort by Product Number
+//       productsData.sort((a, b) => a.number - b.number)
+//       // Sort by Product Name
+//       // products.sort((a, b) => a.name.localeCompare(b.name))
+//       finalProductsArray = productsData[productsData.length - 1]
+//       console.log(`All Products: ${JSON.stringify(productsData)}`)
+//       console.log(`All Products Length: ${productsData.length}`)
+//       console.log(`Final Product of Products Array: ${JSON.stringify(finalProductsArray)}`)
+//       console.log(`Final Product Code of Products Array: ${finalProductsArray.codes[0].productCode}`)
+
+//     })
+// }
     
 // *********************
 // NOTE: Fix this for actual product number that korona generates on submit   
@@ -370,14 +369,12 @@ const init = () => {
   supplierItemCost.addEventListener('input', supplierCostValue)
   supplierPackageQuantity.addEventListener('input', supplierPackageValue)
 
-
-  // getProductNumber();
   getAssortmentNames();
   getSuppliers();
   getCommodityGroups();
   getSectors();
   getPriceGroups();
-  getProducts();
+  //getProducts();
   
   toggleSupplierBtn.addEventListener('click', toggleSupplierSection)
 

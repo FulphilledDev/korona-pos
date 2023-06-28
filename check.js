@@ -1,20 +1,16 @@
-// Purpose: To check if a product exists in the Korona API
-// API Credentials for one user
-const url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-const username = "main";
-const password = "1234";
-//Also thinking about putting a load/buffering screen while the data is being fetched
-//on submit button click
-// Function to check if product name or product code exists in the array of products
-const checkProductExists = async (productName, productCode) => {
+// API Credentials
+const url = "https://167.koronacloud.com/web/api/v3/accounts/dd0b749a-56f5-4185-a782-590230a8530f/";
+const username = "support";
+const password = "support";
+
+// Fetch all products from the API and store them in an array
+const fetchAllProducts = async () => {
   const requestUrl = url + 'products';
-  //initializing the page number and total pages
   let page = 1;
   let totalPages = 1;
-  let productExists = false;
+  const allProducts = [];
 
   while (page <= totalPages) {
-    // Fetching the products from the API
     const response = await fetch(requestUrl + `?page=${page}`, {
       method: 'GET',
       headers: {
@@ -26,22 +22,51 @@ const checkProductExists = async (productName, productCode) => {
     const data = await response.json();
     const products = data.results;
     totalPages = data.resultsTotalPages;
-//checking if the product exists in the array of products
-    productExists = products.some(
-      (product) =>
-        product.name.toLowerCase() === productName.toLowerCase() ||
-        product.codes.some((code) => code.productCode === productCode)
-    );
-//if the product exists, break out of the loop
-    if (productExists) {
-      break;
-    }
-//incrementing the page number to get the next page of products
+    allProducts.push(...products);
     page++;
   }
-//returning the productExists boolean
-  return productExists;
+
+  return allProducts;
 };
 
-// Export the function to be used in other files
-export { checkProductExists };
+// Function to check if product name or product code exists in the array of products
+const checkProductExists = async (productName, productCode) => {
+  try {
+    // Fetch all products
+    const products = await fetchAllProducts();
+
+    if (!products) {
+      console.error('Failed to fetch products');
+      return false;
+    }
+
+    // Log the fetched products
+    console.log('Fetched Products:', products);
+
+    // Create a list of product names and product codes
+    const productList = [];
+
+    products.forEach(product => {
+      productList.push(product.name.toLowerCase());
+
+      if (product.codes) {
+        product.codes.forEach(code => {
+          productList.push(code.productCode);
+        });
+      }
+    });
+
+    // Check if the product name or product code exists in the array
+    const exists = productList.includes(productName.toLowerCase()) || productList.includes(productCode);
+
+    console.log('Product Existence Check:', exists);
+
+    return exists;
+  } catch (error) {
+    console.error('Error checking product existence:', error);
+    return false;
+  }
+};
+
+
+export { checkProductExists, fetchAllProducts };

@@ -1,0 +1,312 @@
+/* General Styles */
+html {
+    scroll-behavior: smooth;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFEFD5; /* Light orange background */
+  }
+  
+  h2 {
+    text-align: center;
+    padding: 20px;
+    color: #333;
+  }
+  
+  p {
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+  
+  /* Navbar and Get Requests */
+  .navbar,
+  .get-requests {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #333; /* Dark background */
+    color: #fff; /* White text */
+    padding: 10px;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .navbar-brand {
+    margin-right: auto;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #fff;
+    padding: 1rem;
+  }
+  
+  .get-requests {
+    min-width: 30%;
+  }
+  
+  .get-requests li {
+    margin-left: 10px;
+    list-style-type: none;
+  }
+  
+  .get-requests li a {
+    text-decoration: none;
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: 10px;
+  }
+  
+  .get-requests li a:hover {
+    background-color: #444; /* Darker background on hover */
+    color: #fff; /* White text on hover */
+  }
+  
+  /* Container Styles */
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+  
+  .form-container,
+  .response-container {
+    max-width: 90%;
+    min-width: 75%;
+    margin: 1rem auto;
+    animation: slideIn 0.5s ease-in-out;
+  }
+  
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    width: 150px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background-color: #ff7c01;
+}
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 5, 0, 0.3);
+    box-shadow: inset 50 50 50px rgb(0, 0, 0);
+    border-radius: 0px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #333; /* Dark scrollbar */
+    border-radius: 0px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    outline: 1px solid rgb(0, 0, 0);
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #221e1b; /* Darker scrollbar on hover */
+  }
+  
+  ::-webkit-scrollbar-corner {
+    background-color: #000000;
+    border-radius: 10px;
+  }
+  
+  ::-webkit-scrollbar-button {
+    display: none;
+  }
+  
+  /* Form Styles */
+  form {
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #ffffff; /* White background */
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(204, 102, 0, 0.7); /* Dark orange shadow */
+  }
+  
+  .dropdown-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  
+  label {
+    color: #555;
+  }
+  
+  input[type="text"],
+  select[type="text"] {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: all 0.3s ease; /* Smooth transition */
+    width: 100%;
+    box-sizing: border-box; /* Include padding and border in width calculation */
+  }
+  
+  input[type="text"]:focus {
+    box-shadow: 0 0 5px #FF8C00; /* Orange shadow when focused */
+  }
+  
+  input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333; /* Dark button background */
+    color: #fff; /* White button text */
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #444; /* Darker button background on hover */
+  }
+  
+  /* Response Box Styles */
+  .response-box {
+    min-width: 75%;
+    margin: 2rem auto;
+    padding: 20px;
+    background-color: #fff; /* White background */
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    color: #333;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .response-box p {
+    margin: 0;
+  }
+  
+  .button-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .btn,
+  #toggle_supplier_btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #333; /* Dark button background */
+    color: #fff; /* White button text */
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .btn:hover,
+  #toggle_supplier_btn:hover {
+    background-color: #444; /* Darker button background on hover */
+  }
+  
+  .checkbox-div {
+    margin: 1rem 0;
+  }
+  
+  #discountable[type="checkbox"],
+  #track_inventory[type="checkbox"],
+  #price_changable[type="checkbox"] {
+    transform: scale(1.5);
+    margin: 0 1rem;
+  }
+  
+  .submit-div {
+    margin-top: 2rem;
+  }
+  
+  .tag-inputAndButton {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  
+  /* Section and Form Grid Styles */
+  .section-div,
+  .supplier-section-div {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 2rem;
+  }
+  
+  .form-div,
+  .supplier-form-div {
+    margin: 0;
+  }
+  
+  /* Media Queries */
+  @media screen and (min-width: 1200px) {
+    .section-div,
+    .supplier-section-div {
+      grid-template-columns: repeat(12, 1fr);
+    }
+  
+    .form-div,
+    .supplier-form-div {
+      grid-column: span 4;
+    }
+  }
+  
+  @media screen and (max-width: 1199px) and (min-width: 768px) {
+    .section-div,
+    .supplier-section-div {
+      grid-template-columns: repeat(8, 1fr);
+    }
+  
+    .form-div,
+    .supplier-form-div {
+      grid-column: span 4;
+    }
+  }
+  
+  @media screen and (max-width: 767px) {
+    .section-div,
+    .supplier-section-div {
+      grid-template-columns: repeat(8, 1fr);
+    }
+  
+    .form-div,
+    .supplier-form-div {
+      grid-column: span 8;
+    }
+  }
+  
+  /* Submitted Products List Styles */
+  #submittedProductsList {
+    padding: 0;
+  }
+  
+  #submittedProductsList li {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff; /* White background */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  #submittedProductsList li:hover {
+    transform: scale(1.05); /* Scale up on hover */
+  }
+  
+  /* Animation Styles */
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  

@@ -42,20 +42,64 @@ let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYY
 
 const submittedProducts = []; // Array to store submitted products during the current session
 
-const displaySubmittedProducts = (productName, productCode) => {
+// const displaySubmittedProducts = (productName, productCode, productSector, commGroup, productPrice) => {
+//   // Get the container where you want to display the products
+//   const productContainer = document.getElementById('submittedProductsList');
+
+//   // Create a new list item
+//   const listItem = document.createElement('li');
+//   listItem.style.listStyle = 'none';
+//   listItem.style.textAlign = 'center'
+
+//   // Set the text of the list item to the product name and UPC code
+//   listItem.textContent = `Product Name: ${productName}, UPC Code: ${productCode}`;
+
+//   // Add the new list item to the container
+//   productContainer.appendChild(listItem);
+// };
+
+const displaySubmittedProducts = (productName, productCode, productSector, commGroup, productPrice) => {
   // Get the container where you want to display the products
   const productContainer = document.getElementById('submittedProductsList');
 
-  // Create a new list item
-  const listItem = document.createElement('li');
-  listItem.style.listStyle = 'none';
-  listItem.style.textAlign = 'center'
+  // Create a new table element
+  const table = document.createElement('table');
+  table.style.textAlign = 'center';
+  table.style.margin = 'auto';
 
-  // Set the text of the list item to the product name and UPC code
-  listItem.textContent = `Product Name: ${productName}, UPC Code: ${productCode}`;
+  // Create table rows for each parameter
+  const parameters = [
+    { name: 'Product Name', value: productName },
+    { name: 'UPC Code', value: productCode },
+    { name: 'Product Sector', value: productSector },
+    { name: 'Commodity Group', value: commGroup },
+    { name: 'Product Price', value: productPrice }
+  ];
 
-  // Add the new list item to the container
-  productContainer.appendChild(listItem);
+  parameters.forEach(parameter => {
+    // Create a table row
+    const row = document.createElement('tr');
+
+    // Create the left column for parameter name
+    const nameColumn = document.createElement('td');
+    nameColumn.textContent = parameter.name;
+    nameColumn.padding = '0 10px'
+
+    // Create the right column for parameter value
+    const valueColumn = document.createElement('td');
+    valueColumn.textContent = parameter.value;
+    valueColumn.padding = '0 10px'
+
+    // Add the columns to the row
+    row.appendChild(nameColumn);
+    row.appendChild(valueColumn);
+
+    // Add the row to the table
+    table.appendChild(row);
+  });
+
+  // Add the table to the container
+  productContainer.appendChild(table);
 };
 
 const onProductSubmit = async (event) => {
@@ -170,7 +214,7 @@ const onProductSubmit = async (event) => {
         
           if (serverResponse.includes('ADDED')) {
             // Update the displayed submitted products
-            displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
+            displaySubmittedProducts(product[0].name, product[0].codes[0].productCode, product[0].sector.name, product[0].commodityGroup.name, product[0].prices[0].value);
 
             // Reset form values
             resetForm();
@@ -232,6 +276,8 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
       const hasGeneral = data.results.some((item) => item[optionText] === 'General');
       const hasDefault = data.results.some((item) => item[optionText] === 'Default');
       const hasGeneralAssortment = data.results.some((item) => item[optionText] === 'General Assortment')
+      const hasMisc = data.results.some((item) => item[optionText] === 'Misc');
+
 
       // Clear any existing options
       $(selectElement).empty();
@@ -246,6 +292,8 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
         } else if (item[optionText] === 'Default' && hasDefault) {
           $(option).prop('selected', true);
         } else if (item[optionText] === 'General Assortment' && hasGeneralAssortment) {
+          $(option).prop('selected', true);
+        } else if (item[optionText] === 'Misc' && hasMisc) {
           $(option).prop('selected', true);
         }
         

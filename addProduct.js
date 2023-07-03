@@ -169,6 +169,12 @@ const onProductSubmit = async (event) => {
     // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
     // Check if the product exists
     const exists = await checkProductExists(productName, product_code);
+
+    if (exists) {
+            alert('Product already exists');
+            return;
+          }
+          
     // Check for Supplier Item cost < Product Price
     if (submittedProductPrice <= submittedSupplierCost) {
       alert('Please make sure that Product Price is greater than Supplier Item Cost.')
@@ -190,11 +196,7 @@ const onProductSubmit = async (event) => {
           const responseData = JSON.parse(data)
           console.log(responseData)
           const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
-          
-          if (exists) {
-            alert('Product already exists');
-            return;
-          }
+        
         
           if (serverResponse.includes('ADDED')) {
             // Update the displayed submitted products
@@ -321,46 +323,6 @@ const getPriceGroups = () => {
   let requestUrl = url + 'priceGroups';
   populateDropdown(requestUrl, priceGroup, 'name', 'name');
 };
-
-
-// const getProducts = () => {
-//   let requestUrl = url + 'products?page=11';
-//   // ^^^ Need to modify this to make a query for the last page of returned results...or something
-
-//   fetch(requestUrl, {
-//     method: 'GET',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': 'Basic ' + btoa(username + ':' + password),
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       console.log(data)
-//       console.log(`Returned data: ${JSON.stringify(data)}`)
-//       // ^^^ This returns a result of the first 1000 products...not all of them
-//       const productsData = data.results
-//       // Sort by Product Number
-//       productsData.sort((a, b) => a.number - b.number)
-//       // Sort by Product Name
-//       // products.sort((a, b) => a.name.localeCompare(b.name))
-//       finalProductsArray = productsData[productsData.length - 1]
-//       console.log(`All Products: ${JSON.stringify(productsData)}`)
-//       console.log(`All Products Length: ${productsData.length}`)
-//       console.log(`Final Product of Products Array: ${JSON.stringify(finalProductsArray)}`)
-//       console.log(`Final Product Code of Products Array: ${finalProductsArray.codes[0].productCode}`)
-
-//     })
-// }
-    
-// *********************
-// NOTE: Fix this for actual product number that korona generates on submit   
-// *********************
- // Get all products
-  // Sort the results by comparing all the lengths of numbers in the array
-  // Add the longest number to the variable productNumber
-  // Add 1 to the end of Product Number
-
 
 //////////////////////////
 // RESET UI

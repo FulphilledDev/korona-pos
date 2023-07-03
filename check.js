@@ -1,7 +1,7 @@
 // API Credentials
-const url = "https://167.koronacloud.com/web/api/v3/accounts/dd0b749a-56f5-4185-a782-590230a8530f/";
-const username = "support";
-const password = "support";
+const url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
+const username = "main";
+const password = "1234";
 
 // Fetch all products from the API and store them in an array
 const fetchAllProducts = async () => {

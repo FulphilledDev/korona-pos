@@ -2,9 +2,9 @@
 import { checkProductExists, fetchAllProducts } from './check.js';
 
 // API Credentials for one user
-let url = "https://167.koronacloud.com/web/api/v3/accounts/dd0b749a-56f5-4185-a782-590230a8530f/";
-let username = "support";
-let password = "support";
+let url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
+let username = "main";
+let password = "1234";
 
 
 // Product Object elements we need
@@ -139,52 +139,50 @@ const onProductSubmit = async (event) => {
     // ^^^ 
     // Default for commodity group 'Unassigned'
     // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
-
+    // Check if the product exists
+    const exists = await checkProductExists(productName, product_code);
     // Check for Supplier Item cost < Product Price
     if (submittedProductPrice <= submittedSupplierCost) {
       alert('Please make sure that Product Price is greater than Supplier Item Cost.')
     } else {
       let requestUrl = url + 'products';
 
-  fetch(requestUrl, {
-    method: 'POST',
-    body: JSON.stringify(product),
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'Basic ' + btoa(username + ":" + password)
-    },
-  })
-    .then(response => response.text())
-    .then(data => {
+      fetch(requestUrl, {
+        method: 'POST',
+        body: JSON.stringify(product),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Basic ' + btoa(username + ":" + password)
+        },
+      })
+        .then(response => response.text())
+        .then(data => {
 
-      console.log(data)
-      const responseData = JSON.parse(data)
-      console.log(responseData)
-      const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
-    
-     // Check if the product exists
-      const exists = await checkProductExists(productName, product_code);
+          console.log(data)
+          const responseData = JSON.parse(data)
+          console.log(responseData)
+          const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+          
+          if (exists) {
+            alert('Product already exists');
+            return;
+          }
+        
+          if (serverResponse.includes('ADDED')) {
+            // Update the displayed submitted products
+            displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
 
+            // Reset form values
+            resetForm();
 
-      if (exists) {
-        alert('Product already exists');
-        return;
-      }
-    
-      if (serverResponse.includes('ADDED')) {
-        // Update the displayed submitted products
-        displaySubmittedProducts(product[0].name, product[0].codes[0].productCode);
-
-        // Reset form values
-        resetForm();
-
-        // Update display with response from server
-        showResponseBox();
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+            // Update display with response from server
+            showResponseBox();
+          }
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+}
 };
 
 const showResponseBox = () => {
@@ -379,6 +377,6 @@ const init = () => {
   toggleSupplierBtn.addEventListener('click', toggleSupplierSection)
 
   resetForm();
-}
+};
 
-init();
+init()

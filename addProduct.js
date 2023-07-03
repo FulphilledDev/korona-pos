@@ -42,22 +42,6 @@ let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYY
 
 const submittedProducts = []; // Array to store submitted products during the current session
 
-// const displaySubmittedProducts = (productName, productCode, productSector, commGroup, productPrice) => {
-//   // Get the container where you want to display the products
-//   const productContainer = document.getElementById('submittedProductsList');
-
-//   // Create a new list item
-//   const listItem = document.createElement('li');
-//   listItem.style.listStyle = 'none';
-//   listItem.style.textAlign = 'center'
-
-//   // Set the text of the list item to the product name and UPC code
-//   listItem.textContent = `Product Name: ${productName}, UPC Code: ${productCode}`;
-
-//   // Add the new list item to the container
-//   productContainer.appendChild(listItem);
-// };
-
 const displaySubmittedProducts = (productName, productCode, productSector, commGroup, productPrice) => {
   // Get the container where you want to display the products
   const productContainer = document.getElementById('submittedProductsList');

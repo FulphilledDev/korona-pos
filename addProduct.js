@@ -17,13 +17,13 @@ let productName = document.getElementById('product_name');
 let price_changable = document.getElementById('price_changable');
 let discountable = document.getElementById('discountable');
 let track_inventory = document.getElementById('track_inventory');
-const commodity_group_name = document.getElementById('commodity_group_name');
-const assortment_name = document.getElementById('assortment_name');
-const sector_name = document.getElementById('sector_name');
-const priceGroup = document.getElementById('price-group')
-const productSubmitForm = document.getElementById('productForm')
-const productInput = document.getElementsByClassName('product-input')
-const supplier_name = document.getElementById('supplier_name')
+let commodity_group_name = document.getElementById('commodity_group_name');
+let assortment_name = document.getElementById('assortment_name');
+let sector_name = document.getElementById('sector_name');
+let priceGroup = document.getElementById('price-group')
+let productSubmitForm = document.getElementById('productForm')
+let productInput = document.getElementsByClassName('product-input')
+let supplier_name = document.getElementById('supplier_name')
 let supplierOrderCode = document.getElementById('orderCode')
 let supplierItemCost = document.getElementById('supplier_value')
 let supplierPackageQuantity = document.getElementById('containerSize')
@@ -40,6 +40,7 @@ let validFrom = currentDate.slice(0, 19) + "+00:00"; // Format validFrom as "YYY
 // FORM SUBMIT
 ///////////////////////
 
+// Submitted Product Information Table
 const submittedProducts = []; // Array to store submitted products during the current session
 
 const displaySubmittedProducts = (productName, productCode, productSector, commGroup, productPrice) => {
@@ -50,6 +51,7 @@ const displaySubmittedProducts = (productName, productCode, productSector, commG
   const table = document.createElement('table');
   table.style.textAlign = 'center';
   table.style.margin = 'auto';
+  table.style.width = '350px'
 
   // Create table rows for each parameter
   const parameters = [
@@ -67,6 +69,7 @@ const displaySubmittedProducts = (productName, productCode, productSector, commG
     // Create the left column for parameter name
     const nameColumn = document.createElement('td');
     nameColumn.textContent = parameter.name;
+    nameColumn.className = 'nameColumn'
     nameColumn.padding = '0 10px'
 
     // Create the right column for parameter value
@@ -86,6 +89,7 @@ const displaySubmittedProducts = (productName, productCode, productSector, commG
   productContainer.appendChild(table);
 };
 
+// Submit Product
 const onProductSubmit = async (event) => {
   event.preventDefault();
 
@@ -150,70 +154,92 @@ const onProductSubmit = async (event) => {
       
   };
   
-    getOptionValue('commodity_group_name')
-    getOptionValue('assortment_name')
-    getOptionValue('sector_name')
-    getOptionValue('price-group')    
-    getOptionValue('supplier_name')
+  getOptionValue('commodity_group_name')
+  getOptionValue('assortment_name')
+  getOptionValue('sector_name')
+  getOptionValue('price-group')    
+  getOptionValue('supplier_name')
 
-    console.log(`Product object: ${product}`)
+  console.log(`Product object: ${product}`)
 
-    const submittedProductPrice = product[0].prices[0].value
-    const submittedSupplierCost = product[0].supplierPrices[0].value
+  const submittedProductPrice = product[0].prices[0].value
+  const submittedSupplierCost = product[0].supplierPrices[0].value
 
-    // TO DO:
-    // Check for Product Code Exists
-    // Check for Product Name Exists
-    // ^^^ 
-    // Default for commodity group 'Unassigned'
-    // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
-    // Check if the product exists
-    const exists = await checkProductExists(productName, product_code);
+  console.log(submittedProductPrice)
+  console.log(submittedSupplierCost)
+  // TO DO:
+ 
+  // Default for commodity group 'Unassigned'
+  // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
+  // Check if the product exists (name and code)
+  const exists = await checkProductExists(product[0].name , product[0].codes[0].productCode);
 
-    if (exists) {
-            alert('Product already exists');
-            return;
-          }
-          
-    // Check for Supplier Item cost < Product Price
-    if (submittedProductPrice <= submittedSupplierCost) {
-      alert('Please make sure that Product Price is greater than Supplier Item Cost.')
-    } else {
-      let requestUrl = url + 'products';
 
-      fetch(requestUrl, {
-        method: 'POST',
-        body: JSON.stringify(product),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Basic ' + btoa(username + ":" + password)
-        },
-      })
-        .then(response => response.text())
-        .then(data => {
+  if (document.getElementById('product_name').value === '' ||
+    document.getElementById('product_code').value === '' ||
+    document.getElementById('values').value === '' ||
+    document.getElementById('orderCode').value === '' ||
+    document.getElementById('supplier_value').value === '' ||
+    document.getElementById('containerSize').value === '') {
 
-          console.log(data)
-          const responseData = JSON.parse(data)
-          console.log(responseData)
-          const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
-        
-        
-          if (serverResponse.includes('ADDED')) {
-            // Update the displayed submitted products
-            displaySubmittedProducts(product[0].name, product[0].codes[0].productCode, product[0].sector.name, product[0].commodityGroup.name, product[0].prices[0].value);
+      const alertBox = document.getElementById('alert-box');
+      alertBox.innerText = "Please fill in all appropriate fields.";
 
-            // Reset form values
-            resetForm();
+      // Apply CSS styles
+      alertBox.style.backgroundColor = "red";
+      alertBox.style.color = "white";
+      alertBox.style.fontWeight = "700";
+      alertBox.style.textAlign = "center";
 
-            // Update display with response from server
-            showResponseBox();
-          }
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-        });
-}
-};
+      // Scroll to the 'serverResponse' element
+      const serverResponseElement = document.getElementById('serverResponse');
+      serverResponseElement.scrollIntoView({ behavior: 'smooth' });
+
+      return;
+  } else if (exists) {
+    alert('Product already exists');
+    return;
+  } else if (submittedProductPrice < submittedSupplierCost) {
+    alert('Please make sure that Product Price is greater than Supplier Item Cost.')
+    return;
+  } else {
+    let requestUrl = url + 'products';
+
+    fetch(requestUrl, {
+      method: 'POST',
+      body: JSON.stringify(product),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa(username + ":" + password)
+      },
+    })
+    .then(response => response.text())
+    .then(data => {
+
+      console.log(data)
+      const responseData = JSON.parse(data)
+      console.log(responseData)
+      const serverResponse = document.getElementById('serverResponse').innerText = "Response from server: " + responseData[0].action;
+    
+    
+      if (serverResponse.includes('ADDED')) {
+        // Display the submitted product
+        displaySubmittedProducts(product[0].name, product[0].codes[0].productCode, product[0].sector.name, product[0].commodityGroup.name, product[0].prices[0].value);
+
+        // Reset form values
+        resetForm();
+
+        // Update display with response from server
+        showResponseBox();
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+ 
+    
+  }
 
 const showResponseBox = () => {
   const responseBox = document.querySelector('.response-box');
@@ -345,6 +371,22 @@ const resetForm = () => {
   document.getElementById('orderCode').value = '';
   document.getElementById('supplier_value').value = '';
   document.getElementById('containerSize').value = '';
+
+  // Reset product variables
+  productName = document.getElementById('product_name').value;
+  product_code = document.getElementById('product_code').value;
+  assortment_name = document.getElementById('assortment_name').value;
+  commodity_group_name = document.getElementById('commodity_group_name').value;
+  prices = document.getElementById('values').value;
+  priceGroup = document.getElementById('price-group').value;
+  sector_name = document.getElementById('sector_name').value;
+  price_changable = document.getElementById('price_changable').checked;
+  track_inventory = document.getElementById('track_inventory').checked;
+  discountable = document.getElementById('discountable').checked;
+  supplier_name = document.getElementById('supplier_name').value;
+  supplierOrderCode = document.getElementById('orderCode').value;
+  supplierItemCost = document.getElementById('supplier_value').value;
+  supplierPackageQuantity = document.getElementById('containerSize').value;
 
   // Hide the supplier_section div
   supplierSection.style.display = 'none';

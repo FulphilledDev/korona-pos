@@ -232,6 +232,10 @@ html {
   .supplier-form-div {
     margin: 0;
   }
+
+  .nameColumn {
+    font-weight:700;
+  }
   
   /* Media Queries */
   @media screen and (min-width: 1200px) {

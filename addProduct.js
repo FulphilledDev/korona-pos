@@ -3,8 +3,8 @@ import { checkProductExists, fetchAllProducts } from './check.js';
 
 // API Credentials for one user
 let url = "https://167.koronacloud.com/web/api/v3/accounts/b281e777-8a54-4ffb-bb1e-19e594454736/";
-let username = "main";
-let password = "1234";
+let username = "support";
+let password = "support";
 
 
 // Product Object elements we need
@@ -14,9 +14,6 @@ let products
 let prices = document.getElementById('values');
 let product_code = document.getElementById('product_code');
 let productName = document.getElementById('product_name');
-let price_changable = document.getElementById('price_changable');
-let discountable = document.getElementById('discountable');
-let track_inventory = document.getElementById('track_inventory');
 let commodity_group_name = document.getElementById('commodity_group_name');
 let assortment_name = document.getElementById('assortment_name');
 let sector_name = document.getElementById('sector_name');
@@ -27,6 +24,16 @@ let supplier_name = document.getElementById('supplier_name')
 let supplierOrderCode = document.getElementById('orderCode')
 let supplierItemCost = document.getElementById('supplier_value')
 let supplierPackageQuantity = document.getElementById('containerSize')
+
+let price_changable = false;
+let discountable = false;
+let track_inventory = false;
+
+function updateCheckboxValues() {
+  price_changable = document.getElementById('price_changable').checked;
+  discountable = document.getElementById('discountable').checked;
+  track_inventory = document.getElementById('track_inventory').checked;
+}
 
 // Get other elements from DOM
 const supplierSection = document.getElementById('supplier_section')
@@ -105,9 +112,9 @@ const onProductSubmit = async (event) => {
         "name": commodity_group_name,
     },
     "name": productName,
-    "priceChangable": price_changable.checked,
-    "discountable": discountable.checked,
-    "trackInventory": track_inventory.checked,
+    "priceChangable": price_changable,
+    "discountable": discountable,
+    "trackInventory": track_inventory,
     "sector": {
         "name": sector_name
     },
@@ -159,6 +166,8 @@ const onProductSubmit = async (event) => {
   getOptionValue('sector_name')
   getOptionValue('price-group')    
   getOptionValue('supplier_name')
+
+  updateCheckboxValues()
 
   console.log(`Product object: ${product}`)
 
@@ -278,6 +287,7 @@ const toggleSupplierSection = () => {
 
 // Create Reusable Dropdown for Supplier, Assortments, Commodity Group, and Sector Name Options
 const populateDropdown = (requestUrl, selectElement, optionValue, optionText, maxHeight) => {
+
   fetch(requestUrl, {
     method: 'GET',
     headers: {
@@ -363,16 +373,10 @@ const resetForm = () => {
   // Reset input field values
   document.getElementById('product_name').value = '';
   document.getElementById('product_code').value = '';
-  document.getElementById('assortment_name').selectedIndex = 0;
-  document.getElementById('commodity_group_name').selectedIndex = 0;
   document.getElementById('values').value = '';
-  document.getElementById('price-group').selectedIndex = 0;
-  document.getElementById('sector_name').selectedIndex = 0;
   document.getElementById('price_changable').checked = true;
   document.getElementById('track_inventory').checked = true;
   document.getElementById('discountable').checked = true;
-  // document.getElementById('supplier_number').value = '';
-  document.getElementById('supplier_name').selectedIndex = 0;
   document.getElementById('orderCode').value = '';
   document.getElementById('supplier_value').value = '';
   document.getElementById('containerSize').value = '';
@@ -380,21 +384,28 @@ const resetForm = () => {
   // Reset product variables
   productName = document.getElementById('product_name').value;
   product_code = document.getElementById('product_code').value;
-  assortment_name = document.getElementById('assortment_name').value;
-  commodity_group_name = document.getElementById('commodity_group_name').value;
+  assortment_name = '';
+  commodity_group_name = '';
+  sector_name = '';
+  supplier_name = '';
   prices = document.getElementById('values').value;
   priceGroup = document.getElementById('price-group').value;
-  sector_name = document.getElementById('sector_name').value;
   price_changable = document.getElementById('price_changable').checked;
   track_inventory = document.getElementById('track_inventory').checked;
   discountable = document.getElementById('discountable').checked;
-  supplier_name = document.getElementById('supplier_name').value;
   supplierOrderCode = document.getElementById('orderCode').value;
   supplierItemCost = document.getElementById('supplier_value').value;
   supplierPackageQuantity = document.getElementById('containerSize').value;
 
   // Hide the supplier_section div
   supplierSection.style.display = 'none';
+
+  // Call Get Functions for dropdown menus to reset values to 'Misc', 'General', etc
+  getAssortmentNames();
+  getSuppliers();
+  getCommodityGroups();
+  getSectors();
+  getPriceGroups();
 };
 
 const init = () => {
@@ -407,6 +418,10 @@ const init = () => {
   supplierOrderCode.addEventListener('input', supplierOrderValue)
   supplierItemCost.addEventListener('input', supplierCostValue)
   supplierPackageQuantity.addEventListener('input', supplierPackageValue)
+
+  document.getElementById('price_changable').addEventListener('change', updateCheckboxValues);
+  document.getElementById('discountable').addEventListener('change', updateCheckboxValues);
+  document.getElementById('track_inventory').addEventListener('change', updateCheckboxValues);
 
   getAssortmentNames();
   getSuppliers();

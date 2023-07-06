@@ -191,9 +191,14 @@ const onProductSubmit = async (event) => {
       alertBox.style.fontWeight = "700";
       alertBox.style.textAlign = "center";
 
-      // Scroll to the 'serverResponse' element
-      const serverResponseElement = document.getElementById('serverResponse');
-      serverResponseElement.scrollIntoView({ behavior: 'smooth' });
+      // Remove alertBox after 5 seconds
+      setTimeout(() => {
+        alertBox.innerText = "";
+        alertBox.style.backgroundColor = "";
+        alertBox.style.color = "";
+        alertBox.style.fontWeight = "";
+        alertBox.style.textAlign = "";
+      }, 5000);
 
       return;
   } else if (exists) {

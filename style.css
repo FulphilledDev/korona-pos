@@ -313,4 +313,22 @@ html {
       opacity: 1;
     }
   }
-  
+
+  .spinner {
+    height: 120px;
+    width: 120px;
+    border: 6px solid #00aeff;
+    border-color: #00aeff transparent #00aeff transparent;
+    border-radius: 50%;
+    animation: 1s linear infinite spin;
+    position: absolute;
+    display: none;
+    align-self: center;
+    z-index: 1;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg)
+    }
+  }

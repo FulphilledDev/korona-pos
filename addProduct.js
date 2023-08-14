@@ -96,6 +96,9 @@ const displaySubmittedProducts = (productName, productCode, productSector, commG
 const onProductSubmit = async (event) => {
   event.preventDefault();
 
+  const spinner = document.querySelector('.spinner');
+  spinner.style.display = 'block';
+
   const product = [{
     "assortment": {
         "name": assortment_name,
@@ -147,18 +150,10 @@ const onProductSubmit = async (event) => {
   getOptionValue('assortment_name')
   getOptionValue('sector_name')
   getOptionValue('price-group')    
-  // getOptionValue('supplier_name')
 
   updateCheckboxValues()
 
   console.log(`Product object: ${product}`)
-
-  const submittedProductPrice = product[0].prices[0].value
-  // const submittedSupplierCost = product[0].supplierPrices[0].value
-
-  console.log(submittedProductPrice)
-  // console.log(submittedSupplierCost)
-  // TO DO:
  
   // Default for commodity group 'Unassigned'
   // Update a product from one on receipt (grabbing product object) (Must be on receipt BEFORE being able to update)
@@ -169,9 +164,6 @@ const onProductSubmit = async (event) => {
   if (document.getElementById('product_name').value === '' ||
     document.getElementById('product_code').value === '' ||
     document.getElementById('values').value === ''
-    // document.getElementById('orderCode').value === '' ||
-    // document.getElementById('supplier_value').value === '' ||
-    // document.getElementById('containerSize').value === ''
     ) {
 
       const alertBox = document.getElementById('alert-box');
@@ -196,9 +188,6 @@ const onProductSubmit = async (event) => {
   } else if (exists) {
     alert('Product already exists');
     return;
-  // } else if (submittedProductPrice < submittedSupplierCost) {
-  //   alert('Please make sure that Product Price is greater than Supplier Item Cost.')
-  //   return;
   } else {
     let requestUrl = url + 'products';
 
@@ -229,6 +218,8 @@ const onProductSubmit = async (event) => {
         // Update display with response from server
         showResponseBox();
       }
+
+      spinner.style.display = 'none';
     })
     .catch((error) => {
       console.error('Error:', error);

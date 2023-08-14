@@ -20,10 +20,10 @@ let sector_name = document.getElementById('sector_name');
 let priceGroup = document.getElementById('price-group')
 let productSubmitForm = document.getElementById('productForm')
 let productInput = document.getElementsByClassName('product-input')
-let supplier_name = document.getElementById('supplier_name')
-let supplierOrderCode = document.getElementById('orderCode')
-let supplierItemCost = document.getElementById('supplier_value')
-let supplierPackageQuantity = document.getElementById('containerSize')
+// let supplier_name = document.getElementById('supplier_name')
+// let supplierOrderCode = document.getElementById('orderCode')
+// let supplierItemCost = document.getElementById('supplier_value')
+// let supplierPackageQuantity = document.getElementById('containerSize')
 
 let price_changable = false;
 let discountable = false;
@@ -34,10 +34,6 @@ function updateCheckboxValues() {
   discountable = document.getElementById('discountable').checked;
   track_inventory = document.getElementById('track_inventory').checked;
 }
-
-// Get other elements from DOM
-const supplierSection = document.getElementById('supplier_section')
-const toggleSupplierBtn = document.getElementById('toggle_supplier_btn')
 
 
 let currentDate = new Date().toISOString();
@@ -101,7 +97,6 @@ const onProductSubmit = async (event) => {
   event.preventDefault();
 
   const product = [{
-    // "number": number,
     "assortment": {
         "name": assortment_name,
     },
@@ -124,19 +119,9 @@ const onProductSubmit = async (event) => {
             "priceGroup": {
                 "name": priceGroup
             },
-            "productCode": product_code
+            "validFrom": validFrom
         }
     ],
-    "supplierPrices": [
-        {
-            "supplier": {
-                "name": supplier_name
-            },
-            "orderCode": supplierOrderCode,
-            "value": supplierItemCost,
-            "containerSize": supplierPackageQuantity,
-        }
-    ]
   }];
 
   const getOptionValue = (option) => {
@@ -154,10 +139,7 @@ const onProductSubmit = async (event) => {
     } else if (option === 'price-group') {
       let productPrice = product[0].prices
       productPrice[0].priceGroup.name = selectedValue;
-    } else if (option === 'supplier_name') {
-      let supplierPrice = product[0].supplierPrices
-      supplierPrice[0].supplier.name = selectedValue;
-    }
+    } 
       
   };
   
@@ -165,17 +147,17 @@ const onProductSubmit = async (event) => {
   getOptionValue('assortment_name')
   getOptionValue('sector_name')
   getOptionValue('price-group')    
-  getOptionValue('supplier_name')
+  // getOptionValue('supplier_name')
 
   updateCheckboxValues()
 
   console.log(`Product object: ${product}`)
 
   const submittedProductPrice = product[0].prices[0].value
-  const submittedSupplierCost = product[0].supplierPrices[0].value
+  // const submittedSupplierCost = product[0].supplierPrices[0].value
 
   console.log(submittedProductPrice)
-  console.log(submittedSupplierCost)
+  // console.log(submittedSupplierCost)
   // TO DO:
  
   // Default for commodity group 'Unassigned'
@@ -186,10 +168,11 @@ const onProductSubmit = async (event) => {
 
   if (document.getElementById('product_name').value === '' ||
     document.getElementById('product_code').value === '' ||
-    document.getElementById('values').value === '' ||
-    document.getElementById('orderCode').value === '' ||
-    document.getElementById('supplier_value').value === '' ||
-    document.getElementById('containerSize').value === '') {
+    document.getElementById('values').value === ''
+    // document.getElementById('orderCode').value === '' ||
+    // document.getElementById('supplier_value').value === '' ||
+    // document.getElementById('containerSize').value === ''
+    ) {
 
       const alertBox = document.getElementById('alert-box');
       alertBox.innerText = "Please fill in all appropriate fields.";
@@ -213,9 +196,9 @@ const onProductSubmit = async (event) => {
   } else if (exists) {
     alert('Product already exists');
     return;
-  } else if (submittedProductPrice < submittedSupplierCost) {
-    alert('Please make sure that Product Price is greater than Supplier Item Cost.')
-    return;
+  // } else if (submittedProductPrice < submittedSupplierCost) {
+  //   alert('Please make sure that Product Price is greater than Supplier Item Cost.')
+  //   return;
   } else {
     let requestUrl = url + 'products';
 
@@ -267,19 +250,6 @@ const showResponseBox = () => {
 const priceInputValue = (e) => prices = e.target.value;
 const productCodeValue = (e) => product_code = e.target.value;
 const productNameValue = (e) => productName = e.target.value;
-const supplierOrderValue = (e) => supplierOrderCode = e.target.value
-const supplierCostValue = (e) => supplierItemCost = e.target.value
-const supplierPackageValue = (e) => supplierPackageQuantity = e.target.value
-
-///////////////////////////
-// TOGGLE SUPPLIERS
-//////////////////////////
-
-const toggleSupplierSection = () => {
-  const section = document.getElementById('supplier_section');
-  section.style.display = section.style.display === 'none' ? 'block' : 'none';
-  toggleSupplierBtn.innerText = section.style.display === 'none' ? 'Show' : 'Hide'
-}
 
 ////////////////////////
 // INIT FUNCTIONS
@@ -340,11 +310,6 @@ const populateDropdown = (requestUrl, selectElement, optionValue, optionText, ma
     });
 };
 
-const getSuppliers = () => {
-  let requestUrl = url + 'suppliers';
-  populateDropdown(requestUrl, supplier_name, 'name', 'name');
-};
-
 const getAssortmentNames = () => {
   let requestUrl = url + 'assortments';
   populateDropdown(requestUrl, assortment_name, 'name', 'name');
@@ -377,9 +342,6 @@ const resetForm = () => {
   document.getElementById('price_changable').checked = true;
   document.getElementById('track_inventory').checked = true;
   document.getElementById('discountable').checked = true;
-  document.getElementById('orderCode').value = '';
-  document.getElementById('supplier_value').value = '';
-  document.getElementById('containerSize').value = '';
 
   // Reset product variables
   productName = document.getElementById('product_name').value;
@@ -387,22 +349,14 @@ const resetForm = () => {
   assortment_name = '';
   commodity_group_name = '';
   sector_name = '';
-  supplier_name = '';
   prices = document.getElementById('values').value;
   priceGroup = document.getElementById('price-group').value;
   price_changable = document.getElementById('price_changable').checked;
   track_inventory = document.getElementById('track_inventory').checked;
   discountable = document.getElementById('discountable').checked;
-  supplierOrderCode = document.getElementById('orderCode').value;
-  supplierItemCost = document.getElementById('supplier_value').value;
-  supplierPackageQuantity = document.getElementById('containerSize').value;
-
-  // Hide the supplier_section div
-  supplierSection.style.display = 'none';
 
   // Call Get Functions for dropdown menus to reset values to 'Misc', 'General', etc
   getAssortmentNames();
-  getSuppliers();
   getCommodityGroups();
   getSectors();
   getPriceGroups();
@@ -415,22 +369,15 @@ const init = () => {
   product_code.addEventListener('input', productCodeValue);
   productName.addEventListener('input', productNameValue);
 
-  supplierOrderCode.addEventListener('input', supplierOrderValue)
-  supplierItemCost.addEventListener('input', supplierCostValue)
-  supplierPackageQuantity.addEventListener('input', supplierPackageValue)
-
   document.getElementById('price_changable').addEventListener('change', updateCheckboxValues);
   document.getElementById('discountable').addEventListener('change', updateCheckboxValues);
   document.getElementById('track_inventory').addEventListener('change', updateCheckboxValues);
 
   getAssortmentNames();
-  getSuppliers();
   getCommodityGroups();
   getSectors();
   getPriceGroups();
-  //getProducts();
-  
-  toggleSupplierBtn.addEventListener('click', toggleSupplierSection)
+
 
   resetForm();
 };
